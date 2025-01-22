@@ -33,8 +33,8 @@ export default function OltList({ olts }: OltListProps) {
                                 </div>
                             </div>
                             <div>
-                                <IsBackup data={olt.data} type='data' />
-                                <IsBackup data={olt.config} type='config' />
+                                <IsBackup data={olt.data} type='data' size={olt.sizeData} />
+                                <IsBackup data={olt.config} type='config' size={olt.sizeConfig} />
                             </div>
                         </motion.div>
                     </Link>

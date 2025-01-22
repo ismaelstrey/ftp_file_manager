@@ -2,6 +2,7 @@ import React from 'react'
 import { motion } from 'framer-motion';
 import { Olt } from '@/app/types/OltTypes';
 import { TableCellsIcon } from '@heroicons/react/24/outline';
+import { bytesToMB } from '@/helper/conversor';
 
 export default function OltDetail({ data, type }: { data?: Olt[], type?: string }) {
     return (
@@ -18,35 +19,35 @@ export default function OltDetail({ data, type }: { data?: Olt[], type?: string 
                         className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                     >
                         <div className="flex items-center gap-3">
-                            <TableCellsIcon className={`h-5 w-5 ${type === 'data' ? ' text-blue-400' : 'text-green-400'} `} />
+                            {/* <TableCellsIcon className={`h-5 w-5 ${type === 'data' ? ' text-blue-400' : 'text-green-400'} `} /> */}
                             <div>
-                                <table>
-                                    <thead>
+                                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                         <tr>
-                                            <th>
+                                            <th scope="col" className="px-6 py-3">
                                                 Tipo
                                             </th>
-                                            <th>Detalhes</th>
+                                            <th scope="col" className="px-6 py-3">Detalhes</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        <tr>
-                                            <td className='font-medium'>Olt:</td>
-                                            <td className='font-medium'>{bkp?.name}</td>
+                                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                            <td className='font-medium px-6 py-4'>Olt:</td>
+                                            <td className='font-medium px-6 py-4'>{bkp?.name}</td>
 
                                         </tr>
-                                        <tr>
-                                            <td className='font-medium'>Data:</td>
-                                            <td className='font-medium'>{bkp?.date}</td>
+                                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                            <td className='font-medium px-6 py-4'>Data:</td>
+                                            <td className='font-medium px-6 py-4'>{bkp?.date}</td>
                                         </tr>
-                                        <tr>
-                                            <td className='font-medium'>Tamanho:</td>
-                                            <td className='font-medium'>{bkp?.size}</td>
+                                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                            <td className='font-medium px-6 py-4'>Tamanho:</td>
+                                            <td className='font-medium px-6 py-4'>{bytesToMB(bkp?.size)} MB </td>
                                         </tr>
-                                        <tr>
-                                            <td className='font-medium'>Tipo:</td>
-                                            <td className='font-medium'>{bkp?.type}</td>
+                                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                            <td className='font-medium px-6 py-4'>Tipo:</td>
+                                            <td className='font-medium px-6 py-4'>{bkp?.type}</td>
                                         </tr>
                                     </tbody>
                                 </table>

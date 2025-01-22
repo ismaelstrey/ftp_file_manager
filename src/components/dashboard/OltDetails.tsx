@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
 import { ArrowUturnLeftIcon, TableCellsIcon } from '@heroicons/react/24/outline';
 import { BackupListAll } from '@/app/types/OltTypes';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import IsBackup from './_backup';
 import OltDetail from './_oltDetail';
+import { bytesToMB } from '@/helper/conversor';
 
 export default function OltDetails({ oltData }: { oltData?: BackupListAll }) {
     const router = useRouter();
@@ -29,11 +29,12 @@ export default function OltDetails({ oltData }: { oltData?: BackupListAll }) {
                                 <TableCellsIcon className="h-5 w-5 text-blue-500" />
                                 <div>
                                     <p className="font-medium">{oltData?.olt}</p>
+
                                 </div>
                             </div>
                             <div>
-                                <IsBackup data={oltData?.data} type='data' />
-                                <IsBackup data={oltData?.config} type='config' />
+                                <IsBackup data={oltData?.data} type='data' size={oltData?.sizeData} />
+                                <IsBackup data={oltData?.config} type='config' size={oltData?.sizeConfig} />
                             </div>
 
                         </div>

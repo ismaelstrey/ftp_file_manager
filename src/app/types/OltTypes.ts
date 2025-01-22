@@ -15,6 +15,8 @@ export interface BackupListAll {
     olt: string;
     totalData: number;
     totalConfig: number;
+    sizeConfig: number;
+    sizeData: number;
     data: Olt[];
     config: Olt[];
 }
