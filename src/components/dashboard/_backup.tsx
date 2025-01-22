@@ -14,7 +14,7 @@ export default function IsBackup({ data, type, size }: { data?: Olt[], type?: st
                 </div>
                 <span>
                     {dia?.map((bkp, key) =>
-                        <ServerStackIcon key={key} className={`w-5 h-5 text-green-400 ${type === 'data' ? ' text-blue-400' : ''}`} title={`Backup realizado: ${bkp.name}` || ''} />
+                        <ServerStackIcon key={key} className={`w-5 h-5  ${type === 'data' ? ' text-blue-400' : 'text-green-400'}`} title={`Backup realizado: ${bkp.name}` || ''} />
                     )}
                 </span>
             </div>

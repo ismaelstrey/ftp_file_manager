@@ -1,9 +1,9 @@
 'use client'
-import { BackupListAll, Olt } from "@/app/types/OltTypes";
-import { useEffect, useState } from "react";
+import { BackupListAll, Directory, Olt } from "@/app/types/OltTypes";
+import { useEffect, useState, useCallback } from "react";
 
 interface UseFetchReturn {
-    directories: any[];
+    directories: Directory[];
     loading: boolean;
     stats: {
         totalDirs: number;
@@ -20,7 +20,7 @@ interface UseFetchReturn {
 }
 
 const useFetch = (): UseFetchReturn => {
-    const [directories, setDirectories] = useState<any[]>([]);
+    const [directories, setDirectories] = useState<Directory[]>([]);
     const [loading, setLoading] = useState(true);
     const [olts, setOlts] = useState<Olt[]>([]);
     const [backup, setBackup] = useState<BackupListAll[]>();
@@ -47,20 +47,19 @@ const useFetch = (): UseFetchReturn => {
         }
     };
 
-    const fetchDataOltBkp = async (data?: Olt[]) => {
+    const fetchDataOltBkp = useCallback(async (data?: Olt[]) => {
         try {
             const oltsToFetch = data || olts;
             const backupPromises = oltsToFetch.map(async (olt) => {
                 const response: BackupListAll = await fetch('/api/olts/bkp/' + olt.name).then(res => res.json());
                 return response;
             });
-
             const responses = await Promise.all(backupPromises);
             setBackup(responses);
         } catch (err) {
             setError(err instanceof Error ? err : new Error('Erro ao carregar backups'));
         }
-    };
+    }, [olts]);
 
     const fetchDataDiretorios = async () => {
         try {
@@ -79,16 +78,19 @@ const useFetch = (): UseFetchReturn => {
 
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true);
-            const data = await fetchDataOlts();
-            await fetchDataOltBkp(data);
-            console.log(backup);
-            // await fetchDataDiretorios();
-            setLoading(false);
+            try {
+                setLoading(true);
+                const data = await fetchDataOlts();
+                await fetchDataOltBkp(data);
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
+            } finally {
+                setLoading(false);
+            }
         };
 
         fetchData();
-    }, []); // Execute apenas uma vez ao montar o componente
+    }, []);
 
     return {
         directories,

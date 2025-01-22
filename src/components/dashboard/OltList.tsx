@@ -3,15 +3,9 @@ import { TableCellsIcon } from '@heroicons/react/24/outline';
 import { BackupListAll } from '@/app/types/OltTypes';
 import Link from 'next/link';
 import IsBackup from './_backup';
-import { col } from 'motion/react-client';
-
-
-
 interface OltListProps {
     olts: BackupListAll[];
-
 }
-
 export default function OltList({ olts }: OltListProps) {
     return (
         <div className="bg-white rounded-xl shadow-sm p-6">

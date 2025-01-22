@@ -4,11 +4,9 @@ import { BackupListAll } from '@/app/types/OltTypes';
 import { useRouter } from 'next/navigation';
 import IsBackup from './_backup';
 import OltDetail from './_oltDetail';
-import { bytesToMB } from '@/helper/conversor';
 
 export default function OltDetails({ oltData }: { oltData?: BackupListAll }) {
     const router = useRouter();
-
     return (
         <div className="bg-white rounded-xl shadow-sm p-6">
             <div className='flex justify-between'>
@@ -20,29 +18,22 @@ export default function OltDetails({ oltData }: { oltData?: BackupListAll }) {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
-                >
-                    <div className="flex flex-col w-full items-center gap-3">
-
+                >                    <div className="flex flex-col w-full items-center gap-3">
                         <div className='flex w-full justify-between gap-3'>
-
                             <div className="flex items-center gap-3">
                                 <TableCellsIcon className="h-5 w-5 text-blue-500" />
                                 <div>
                                     <p className="font-medium">{oltData?.olt}</p>
-
                                 </div>
                             </div>
                             <div>
                                 <IsBackup data={oltData?.data} type='data' size={oltData?.sizeData} />
                                 <IsBackup data={oltData?.config} type='config' size={oltData?.sizeConfig} />
                             </div>
-
                         </div>
                         <div className='flex w-full justify-between gap-3'>
                             <OltDetail data={oltData?.data} type='data' />
                             <OltDetail data={oltData?.config} />
-
-
                         </div>
                     </div>
                 </motion.div>

@@ -20,3 +20,8 @@ export interface BackupListAll {
     data: Olt[];
     config: Olt[];
 }
+export interface Directory {
+    id: number;
+    path: string;
+    lastBackup?: string;
+}

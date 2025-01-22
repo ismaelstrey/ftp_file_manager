@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 interface StatusCardProps {
     title: string;
-    value: string | number;
+    value?: string | number;
     icon: React.ReactNode;
     color: string;
     loading?: boolean;

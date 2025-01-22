@@ -1,10 +1,11 @@
 import React from 'react'
 import { motion } from 'framer-motion';
 import { Olt } from '@/app/types/OltTypes';
-import { TableCellsIcon } from '@heroicons/react/24/outline';
 import { bytesToMB } from '@/helper/conversor';
 
 export default function OltDetail({ data, type }: { data?: Olt[], type?: string }) {
+
+    console.log(data)
     return (
         <div className={`flex w-full flex-col ${type === 'data' ? ' bg-blue-400' : 'bg-green-400'} `}>
 
@@ -19,7 +20,6 @@ export default function OltDetail({ data, type }: { data?: Olt[], type?: string 
                         className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                     >
                         <div className="flex items-center gap-3">
-                            {/* <TableCellsIcon className={`h-5 w-5 ${type === 'data' ? ' text-blue-400' : 'text-green-400'} `} /> */}
                             <div>
                                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -30,12 +30,10 @@ export default function OltDetail({ data, type }: { data?: Olt[], type?: string 
                                             <th scope="col" className="px-6 py-3">Detalhes</th>
                                         </tr>
                                     </thead>
-
                                     <tbody>
                                         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <td className='font-medium px-6 py-4'>Olt:</td>
                                             <td className='font-medium px-6 py-4'>{bkp?.name}</td>
-
                                         </tr>
                                         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <td className='font-medium px-6 py-4'>Data:</td>
@@ -54,8 +52,6 @@ export default function OltDetail({ data, type }: { data?: Olt[], type?: string 
                             </div>
                         </div>
                         <div>
-                            {/* <IsBackup data={bkp?.olt} type='data' />
-                                                <IsBackup data={bkp?.type} type='config' /> */}
                         </div>
                     </motion.div>
                 )
