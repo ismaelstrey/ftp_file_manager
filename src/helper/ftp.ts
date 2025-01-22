@@ -29,7 +29,7 @@ const connectFTP = (): Promise<FTPClient> => {
         client.on("error", reject);
         client.connect(ftpConfig);
         client.on("end", () => {
-            console.log("Disconnected from FTP server");
+            console.log(`Disconnected from FTP server ${ftpConfig.host}, ${ftpConfig.user}, ${ftpConfig.password}`);
         });
     });
 };

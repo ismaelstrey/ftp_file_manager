@@ -1,9 +1,11 @@
-import { HomeIcon, FolderIcon, ClockIcon, CogIcon } from '@heroicons/react/24/outline';
+'use client';
+import { HomeIcon, FolderIcon, ClockIcon, CogIcon, TableCellsIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const menuItems = [
     { name: 'Dashboard', icon: HomeIcon, href: '/' },
+    { name: 'OLTs', icon: TableCellsIcon, href: '/page/olts' },
     { name: 'Diretórios', icon: FolderIcon, href: '/diretorios' },
     { name: 'Histórico', icon: ClockIcon, href: '/historico' },
     { name: 'Configurações', icon: CogIcon, href: '/configuracoes' },
