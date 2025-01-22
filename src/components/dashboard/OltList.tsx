@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import { TableCellsIcon } from '@heroicons/react/24/outline';
-import { BackupListAll, Olts } from '@/app/types/OltTypes';
+import { BackupListAll } from '@/app/types/OltTypes';
 import Link from 'next/link';
 import IsBackup from './_backup';
+import { col } from 'motion/react-client';
 
 
 
@@ -12,10 +13,6 @@ interface OltListProps {
 }
 
 export default function OltList({ olts }: OltListProps) {
-
-
-
-
     return (
         <div className="bg-white rounded-xl shadow-sm p-6">
             <div className='flex justify-between'>
@@ -32,13 +29,12 @@ export default function OltList({ olts }: OltListProps) {
                             <div className="flex items-center gap-3">
                                 <TableCellsIcon className="h-5 w-5 text-blue-500" />
                                 <div>
-
                                     <p className="font-medium">{olt.olt}</p>
-
                                 </div>
                             </div>
                             <div>
-                                <IsBackup data={olt.data} />
+                                <IsBackup data={olt.data} type='data' />
+                                <IsBackup data={olt.config} type='config' />
                             </div>
                         </motion.div>
                     </Link>

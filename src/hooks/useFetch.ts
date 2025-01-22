@@ -1,5 +1,5 @@
 'use client'
-import { Backup, BackupListAll, Olts } from "@/app/types/OltTypes";
+import { BackupListAll, Olt } from "@/app/types/OltTypes";
 import { useEffect, useState } from "react";
 
 interface UseFetchReturn {
@@ -12,9 +12,9 @@ interface UseFetchReturn {
         successRate: string;
     };
     fetchDataDiretorios: () => Promise<void>;
-    fetchDataOlts: () => Promise<Backup[] | []>;
-    fetchDataOltBkp: (data?: Backup[]) => Promise<void>;
-    olts?: Backup[];
+    fetchDataOlts: () => Promise<Olt[] | []>;
+    fetchDataOltBkp: (data?: Olt[]) => Promise<void>;
+    olts?: Olt[];
     backup?: BackupListAll[];
     error: Error | null;
 }
@@ -22,7 +22,7 @@ interface UseFetchReturn {
 const useFetch = (): UseFetchReturn => {
     const [directories, setDirectories] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
-    const [olts, setOlts] = useState<Backup[]>([]);
+    const [olts, setOlts] = useState<Olt[]>([]);
     const [backup, setBackup] = useState<BackupListAll[]>();
     const [error, setError] = useState<Error | null>(null);
     const [stats, setStats] = useState({
@@ -34,7 +34,7 @@ const useFetch = (): UseFetchReturn => {
 
     const fetchDataOlts = async () => {
         try {
-            const response: Backup[] = await fetch('/api/olts').then(res => res.json());
+            const response: Olt[] = await fetch('/api/olts').then(res => res.json());
             if (!response) {
                 throw new Error('Falha ao carregar dados das OLTs');
             }
@@ -47,7 +47,7 @@ const useFetch = (): UseFetchReturn => {
         }
     };
 
-    const fetchDataOltBkp = async (data?: Backup[]) => {
+    const fetchDataOltBkp = async (data?: Olt[]) => {
         try {
             const oltsToFetch = data || olts;
             const backupPromises = oltsToFetch.map(async (olt) => {

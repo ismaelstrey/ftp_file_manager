@@ -1,11 +1,12 @@
-export interface Olts {
-    id: number;
-    path: string;
+export interface Olt {
     name: string;
-    lastBackup?: string;
+    date: string;
+    size: number;
+    type: string;
 }
+
 export interface Backup {
-    name: string;
+    olt: string;
     date: string;
     size: number;
     type: string;
@@ -14,5 +15,6 @@ export interface BackupListAll {
     olt: string;
     totalData: number;
     totalConfig: number;
-    data: Backup[];
+    data: Olt[];
+    config: Olt[];
 }
