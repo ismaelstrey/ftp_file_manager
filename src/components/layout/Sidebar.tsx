@@ -1,14 +1,15 @@
 'use client';
-import { HomeIcon, FolderIcon, ClockIcon, CogIcon, TableCellsIcon } from '@heroicons/react/24/outline';
+import { HomeIcon, FolderIcon, ClockIcon, CogIcon, TableCellsIcon, CheckIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const menuItems = [
     { name: 'Dashboard', icon: HomeIcon, href: '/' },
     { name: 'OLTs', icon: TableCellsIcon, href: '/page/olts' },
-    { name: 'Diretórios', icon: FolderIcon, href: '/diretorios' },
-    { name: 'Histórico', icon: ClockIcon, href: '/historico' },
-    { name: 'Configurações', icon: CogIcon, href: '/configuracoes' },
+    { name: 'Diretórios', icon: FolderIcon, href: '/page/diretorios' },
+    { name: 'Histórico', icon: ClockIcon, href: '/page/historico' },
+    { name: 'Checklist', icon: CheckIcon, href: '/page/checklist' },
+    { name: 'Configurações', icon: CogIcon, href: '/page/configuracoes' },
 ];
 
 export default function Sidebar() {

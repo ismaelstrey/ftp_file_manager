@@ -13,3 +13,15 @@ model MonitoredDirectory {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
+
+model Task {
+    id           Int       @id @default(autoincrement())
+    title        String
+    description  String
+    isContinuous Boolean   @default(false)
+    status       String    @default("pending")
+    dueDate      DateTime?
+    completedAt  DateTime?
+    createdAt    DateTime  @default(now())
+    updatedAt    DateTime  @updatedAt
+}
