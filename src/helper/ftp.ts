@@ -3,7 +3,37 @@ import { PrismaClient } from "@prisma/client";
 import FTPClient from "ftp";
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
+const MAX_CONNECTIONS = 4;
+let activeConnections = 0;
+const connectionQueue: (() => void)[] = [];
+const activeClients: FTPClient[] = [];
 
+const waitForConnection = (): Promise<void> => {
+    return new Promise((resolve) => {
+        if (activeConnections < MAX_CONNECTIONS) {
+            activeConnections++;
+            resolve();
+        } else {
+            connectionQueue.push(resolve);
+        }
+    });
+};
+
+const releaseConnection = (client: FTPClient) => {
+    activeConnections--;
+    const index = activeClients.indexOf(client);
+    if (index > -1) {
+        activeClients.splice(index, 1);
+    }
+
+    if (connectionQueue.length > 0) {
+        const next = connectionQueue.shift();
+        if (next) {
+            activeConnections++;
+            next();
+        }
+    }
+};
 
 const prisma = new PrismaClient();
 
@@ -21,16 +51,28 @@ interface FTPFile {
     date: Date | string;
 }
 
-const connectFTP = (): Promise<FTPClient> => {
+const connectFTP = async (): Promise<FTPClient> => {
+    await waitForConnection();
+
     return new Promise((resolve, reject) => {
         const client = new FTPClient();
 
-        client.on("ready", () => resolve(client));
-        client.on("error", reject);
-        client.connect(ftpConfig);
-        client.on("end", () => {
-            console.log(`Disconnected from FTP server ${ftpConfig.host}, ${ftpConfig.user}, ${ftpConfig.password}`);
+        client.on("ready", () => {
+            activeClients.push(client);
+            resolve(client);
         });
+
+        client.on("error", (err) => {
+            releaseConnection(client);
+            reject(err);
+        });
+
+        client.on("end", () => {
+            releaseConnection(client);
+            console.log("Disconnected from FTP server");
+        });
+
+        client.connect(ftpConfig);
     });
 };
 
@@ -95,8 +137,6 @@ const checkDirectories = async () => {
                         date: file.date,
                         size: file.size,
                         type: file.type
-
-
                     })),
             });
         }
@@ -106,25 +146,25 @@ const checkDirectories = async () => {
 
     return result;
 };
+
 function getFileExtension(filename: string) {
     const regex = /\.([a-zA-Z0-9]+)$/; // Regex para capturar a extensão após o último ponto
     const match = filename.match(regex);
     return match ? match[1] : null; // Retorna a extensão ou null se não encontrar
 }
+
 // Listar arquivos de um diretório específico
 const getDirectoryFiles = async (path: string) => {
-    const client = await connectFTP();
     const regex = /\d{4}-\d{2}-\d{2}/;
+    const client = await connectFTP();
     try {
         const files = await listDirectory(client, path);
-        return files
-            .filter(file => file.name !== '.' && file.name !== '..') // Remove . e ..
-            .map(file => ({
-                name: file.name,
-                date: file.name.match(regex)?.[0] || file.date,
-                size: file.size,
-                type: getFileExtension(file.name) || file.type
-            }));
+        return files.map(file => ({
+            name: file.name,
+            date: file.name.match(regex)?.[0] || file.date,
+            size: file.size,
+            type: getFileExtension(file.name) || file.type
+        }));
     } finally {
         client.end();
     }
