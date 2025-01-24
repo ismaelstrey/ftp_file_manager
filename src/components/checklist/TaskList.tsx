@@ -6,12 +6,16 @@ import { CheckCircleIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
 export default function TaskList() {
     const { tasks, loading, completeTask, resetTask } = useChecklist();
 
+    const sortedTasks = tasks.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+
     if (loading) return <div>Carregando...</div>;
 
     return (
         <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {tasks.map((task) => (
+                {sortedTasks.map((task) => (
                     <motion.div
                         key={task.id}
                         initial={{ opacity: 0, y: 20 }}

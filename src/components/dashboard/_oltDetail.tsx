@@ -4,6 +4,11 @@ import { Olt } from '@/app/types/OltTypes';
 import { bytesToMB } from '@/helper/conversor';
 
 export default function OltDetail({ data, type }: { data?: Olt[], type?: string }) {
+    const sortedData = data?.sort((a, b) => {
+        const dateA = new Date(a.date).getTime();
+        const dateB = new Date(b.date).getTime();
+        return dateB - dateA; // Ordem decrescente (mais recente primeiro)
+    });
 
     console.log(data)
     return (
@@ -12,7 +17,7 @@ export default function OltDetail({ data, type }: { data?: Olt[], type?: string 
             <div className="flex flex-col items-center gap-3">
                 <div>  <h2>{type || "Config"}</h2> </div>
 
-                {data?.map((bkp, key) =>
+                {sortedData?.map((bkp, key) =>
                     <motion.div
                         key={key}
                         initial={{ opacity: 0, y: 20 }}

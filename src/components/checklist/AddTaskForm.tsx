@@ -1,21 +1,34 @@
 'use client';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useChecklist } from '@/hooks/useChecklist';
+import { Task } from '@/app/types/ChecklistTypes';
 
 interface AddTaskFormProps {
     onClose: () => void;
 }
 
+interface TaskProps extends Task {
+
+}
+
 export default function AddTaskForm({ onClose }: AddTaskFormProps) {
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<TaskProps>({
+        id: 0,
         title: '',
         description: '',
         isContinuous: false,
-        dueDate: ''
+        status: 'pending',
+        dueDate: undefined,
+        completedAt: undefined,
+        createdAt: new Date()
     });
+
+    const { createTask } = useChecklist()
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        createTask(formData);
         // Implementar lógica de criação de tarefa
         onClose();
     };
@@ -71,8 +84,8 @@ export default function AddTaskForm({ onClose }: AddTaskFormProps) {
                             </label>
                             <input
                                 type="date"
-                                value={formData.dueDate}
-                                onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
+                                value={formData.dueDate ? formData.dueDate.toISOString().split('T')[0] : ''}
+                                onChange={(e) => setFormData({ ...formData, dueDate: e.target.value ? new Date(e.target.value) : undefined })}
                                 className="w-full px-3 py-2 border rounded-lg"
                             />
                         </div>
