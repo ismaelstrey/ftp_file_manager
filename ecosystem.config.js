@@ -8,7 +8,7 @@ module.exports = {
         watch: false,
         max_memory_restart: '1G',
         env: {
-            PORT: 3000,
+            PORT: 80,
             NODE_ENV: 'production',
             FTP_HOST: process.env.FTP_HOST,
             FTP_USER: process.env.FTP_USER,

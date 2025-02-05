@@ -13,6 +13,7 @@ export async function GET() {
         });
         return new Response(JSON.stringify(tasks), { status: 200 });
     } catch (error) {
+        console.log(error);
         return new Response(JSON.stringify({ error: 'Erro ao buscar tarefas' }), { status: 500 });
     }
 }
@@ -31,6 +32,7 @@ export async function POST(request: NextRequest) {
         });
         return new Response(JSON.stringify(task), { status: 201 });
     } catch (error) {
+        console.log(error);
         return new Response(JSON.stringify({ error: 'Erro ao criar tarefa' }), { status: 500 });
     }
 } 

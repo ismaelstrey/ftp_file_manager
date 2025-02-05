@@ -1,7 +1,5 @@
 'use client';
 import { useState } from 'react';
-
-import { Task } from '@/app/types/ChecklistTypes';
 import TaskList from '@/components/checklist/TaskList';
 import AddTaskForm from '@/components/checklist/AddTaskForm';
 

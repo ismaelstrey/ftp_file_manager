@@ -12,10 +12,10 @@ export default function OltDetail({ data, type }: { data?: Olt[], type?: string 
 
     console.log(data)
     return (
-        <div className={`flex w-full flex-col ${type === 'data' ? ' bg-blue-400' : 'bg-green-400'} `}>
+        <div className={`flex w-full rounded-lg p-4 flex-col ${type === 'data' ? ' bg-blue-400' : 'bg-green-400'} `}>
 
             <div className="flex flex-col items-center gap-3">
-                <div>  <h2>{type || "Config"}</h2> </div>
+                <div>  <h2 className='text-2xl font-semibold text-white capitalize'>{type || "Config"}</h2> </div>
 
                 {sortedData?.map((bkp, key) =>
                     <motion.div

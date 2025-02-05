@@ -6,11 +6,12 @@ const prisma = new PrismaClient();
 // POST - Resetar tarefa contínua
 export async function POST(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
+    const { id } = await params;
     try {
         const task = await prisma.task.update({
-            where: { id: parseInt(params.id) },
+            where: { id: parseInt(id) },
             data: {
                 status: 'pending',
                 completedAt: null
@@ -18,6 +19,7 @@ export async function POST(
         });
         return new Response(JSON.stringify(task), { status: 200 });
     } catch (error) {
+        console.log(error);
         return new Response(JSON.stringify({ error: 'Erro ao resetar tarefa' }), { status: 500 });
     }
 } 

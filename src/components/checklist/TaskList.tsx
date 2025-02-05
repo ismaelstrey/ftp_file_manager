@@ -6,6 +6,8 @@ import { CheckCircleIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
 export default function TaskList() {
     const { tasks, loading, completeTask, resetTask } = useChecklist();
 
+    console.log(tasks);
+
     const sortedTasks = tasks.sort((a, b) => {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     });
@@ -24,16 +26,32 @@ export default function TaskList() {
                             }`}
                     >
                         <div className="flex justify-between items-start">
-                            <div>
+                            <div className='flex w-full flex-col gap-2'>
                                 <h3 className="font-semibold">{task.title}</h3>
                                 <p className="text-sm text-gray-600 mt-1">
                                     {task.description}
                                 </p>
-                                {task.isContinuous && (
-                                    <span className="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded mt-2">
-                                        Tarefa Contínua
-                                    </span>
-                                )}
+                                <div className='flex w-full gap-8 justify-between'>
+                                    {task.isContinuous && (
+                                        <span className="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded mt-2">
+                                            Tarefa Contínua
+                                        </span>
+                                    )}
+                                    {task.status === 'completed' && (
+                                        <div className=' w-full justify-between'>
+                                            <span className="inline-block px-2 py-1 text-xs bg-blue-100 text-green-800 rounded mt-2">
+                                                Tarefa completa <CheckCircleIcon className="h-4 w-4 inline-block" />
+                                            </span>
+                                            <span>
+                                                {task.completedAt && (
+                                                    <span className="inline-block px-2 py-1 text-xs bg-blue-100 text-green-800 rounded mt-2">
+                                                        Realizada em: {new Date(task.completedAt).toLocaleString()}
+                                                    </span>
+                                                )}
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                             <div className="flex gap-2">
                                 {task.status === 'pending' ? (

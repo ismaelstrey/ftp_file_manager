@@ -8,12 +8,9 @@ interface AddTaskFormProps {
     onClose: () => void;
 }
 
-interface TaskProps extends Task {
-
-}
 
 export default function AddTaskForm({ onClose }: AddTaskFormProps) {
-    const [formData, setFormData] = useState<TaskProps>({
+    const [formData, setFormData] = useState<Task>({
         id: 0,
         title: '',
         description: '',
