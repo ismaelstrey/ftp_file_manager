@@ -1,0 +1,27 @@
+-- CreateTable
+CREATE TABLE "FtpServer" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "host" TEXT NOT NULL,
+    "port" INTEGER NOT NULL DEFAULT 21,
+    "username" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- CreateTable
+CREATE TABLE "FtpDirectory" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "path" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "ftpServerId" INTEGER NOT NULL,
+    CONSTRAINT "FtpDirectory_ftpServerId_fkey" FOREIGN KEY ("ftpServerId") REFERENCES "FtpServer" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "FtpEmpresal" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "path" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "ftpServerId" INTEGER NOT NULL,
+    CONSTRAINT "FtpEmpresal_ftpServerId_fkey" FOREIGN KEY ("ftpServerId") REFERENCES "FtpServer" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);

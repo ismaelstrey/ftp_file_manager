@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import FTPClient from "ftp";
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
+
 const MAX_CONNECTIONS = 4;
 let activeConnections = 0;
 const connectionQueue: (() => void)[] = [];
@@ -40,6 +41,7 @@ const prisma = new PrismaClient();
 const ftpConfig = {
     host: process.env.FTP_HOST,
     user: process.env.FTP_USER,
+    port: Number(process.env.FTP_PORT) || 21,
     password: process.env.FTP_PASSWORD,
 };
 

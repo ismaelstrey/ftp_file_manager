@@ -25,3 +25,31 @@ model Task {
     createdAt    DateTime  @default(now())
     updatedAt    DateTime  @updatedAt
 }
+
+model FtpServer {
+    id           Int            @id @default(autoincrement())
+    host         String
+    port         Int            @default(21)
+    username     String
+    password     String
+    active       Boolean        @default(false)
+    createdAt    DateTime       @default(now())
+    FtpDirectory FtpDirectory[]
+    FtpEmpresal  FtpEmpresal[]
+}
+
+model FtpDirectory {
+    id          Int       @id @default(autoincrement())
+    path        String
+    server      FtpServer @relation(fields: [ftpServerId], references: [id])
+    createdAt   DateTime  @default(now())
+    ftpServerId Int
+}
+
+model FtpEmpresal {
+    id          Int       @id @default(autoincrement())
+    path        String
+    server      FtpServer @relation(fields: [ftpServerId], references: [id])
+    createdAt   DateTime  @default(now())
+    ftpServerId Int
+}
