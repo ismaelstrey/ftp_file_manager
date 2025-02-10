@@ -1,7 +1,7 @@
 import moment from 'moment';
-import { PrismaClient } from "@prisma/client";
 import FTPClient from "ftp";
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { prisma } from '@/lib/prisma';
 
 
 const MAX_CONNECTIONS = 4;
@@ -36,14 +36,15 @@ const releaseConnection = (client: FTPClient) => {
     }
 };
 
-const prisma = new PrismaClient();
 
-const ftpConfig = {
-    host: process.env.FTP_HOST,
-    user: process.env.FTP_USER,
-    port: Number(process.env.FTP_PORT) || 21,
-    password: process.env.FTP_PASSWORD,
-};
+
+
+
+const ftpConfigDb = async () => await prisma.ftpServer.findFirst({
+    where: {
+        active: true
+    }
+});
 
 // Primeiro, definimos a interface para os arquivos FTP
 interface FTPFile {
@@ -55,6 +56,15 @@ interface FTPFile {
 
 const connectFTP = async (): Promise<FTPClient> => {
     await waitForConnection();
+
+    // Obter a configuração FTP atual do banco de dados
+    const data = await ftpConfigDb();
+    const ftpConfig = {
+        host: data?.host || process.env.FTP_HOST,
+        user: data?.username || process.env.FTP_USER,
+        port: data?.port || Number(process.env.FTP_PORT) || 21,
+        password: data?.password || process.env.FTP_PASSWORD,
+    };
 
     return new Promise((resolve, reject) => {
         const client = new FTPClient();
@@ -73,6 +83,7 @@ const connectFTP = async (): Promise<FTPClient> => {
             releaseConnection(client);
             console.log("Disconnected from FTP server");
         });
+        console.log(ftpConfig)
 
         client.connect(ftpConfig);
     });
@@ -86,6 +97,7 @@ const listDirectory = (client: FTPClient, directory: string): Promise<FTPFile[]>
         });
     });
 };
+
 
 // Adicionar novo diretório para monitoramento
 const addDirectory = async (path: string) => {
