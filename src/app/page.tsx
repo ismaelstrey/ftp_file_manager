@@ -1,11 +1,19 @@
-'use client';
-import { ClockIcon, CheckCircleIcon, TableCellsIcon } from '@heroicons/react/24/outline';
-import StatusCard from '@/components/dashboard/StatusCard';
-import Link from 'next/link';
-import useFetch from '@/hooks/useFetch';
+"use client";
+import {
+  ClockIcon,
+  CheckCircleIcon,
+  TableCellsIcon,
+} from "@heroicons/react/24/outline";
+import StatusCard from "@/components/dashboard/StatusCard";
+import Link from "next/link";
+import useFetch from "@/hooks/useFetch";
+import useFtpServer from "@/hooks/useFtpServer";
 
 export default function Dashboard() {
   const { olts } = useFetch();
+  const { ftpServers } = useFtpServer();
+  const ftpServerAtivo = ftpServers.filter(({ active }) => active);
+
   return (
     <main className="ml-64 p-8">
       <h1 className="text-2xl font-bold mb-8">Dashboard</h1>
@@ -19,19 +27,18 @@ export default function Dashboard() {
           />
         </Link>
         <StatusCard
-          title="Último Backup"
-          value={'N/A'}
+          title={`FTP SERVERS || Servidor Ativo ${ftpServerAtivo[0].host}`}
+          value={ftpServers?.length}
           icon={<ClockIcon className="h-8 w-8" />}
           color="bg-green-500"
         />
         <StatusCard
           title="Taxa de Sucesso"
-          value={'N/A'}
+          value={"N/A"}
           icon={<CheckCircleIcon className="h-8 w-8" />}
           color="bg-purple-500"
         />
       </div>
     </main>
-
   );
 }
