@@ -27,7 +27,9 @@ export default function Dashboard() {
           />
         </Link>
         <StatusCard
-          title={`FTP SERVERS || Servidor Ativo ${ftpServerAtivo[0].host}`}
+          title={`FTP SERVERS || Servidor Ativo ${
+            ftpServerAtivo[0]?.host ? ftpServerAtivo[0]?.host : "0"
+          }`}
           value={ftpServers?.length}
           icon={<ClockIcon className="h-8 w-8" />}
           color="bg-green-500"
