@@ -15,7 +15,7 @@ export default function OltMenu({
         <div
           onClick={() => id && togleOlt(id, !active)}
           key={id}
-          className={`flex p-1 rounded-lg bolder text-sm cursor-pointer transition-all hover:text-zinc-800 hover:scale-110 ${active ? "bg-lime-400" : "bg-blue-500"
+          className={`flex p-1 border border-solid border-zinc-600 rounded-lg bolder text-zinc-100 text-md cursor-pointer transition-all hover:text-zinc-800 hover:scale-110 ${active ? "bg-primary-gradient" : "bg-secondary-gradient"
             }`}
         >
           {name}

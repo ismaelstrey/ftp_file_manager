@@ -7,6 +7,7 @@ interface OltListProps {
     olts: BackupListAll[];
 }
 export default function OltList({ olts }: OltListProps) {
+
     return (
         <div className="bg-white rounded-xl shadow-sm p-6">
             <div className='flex justify-between'>

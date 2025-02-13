@@ -1,5 +1,6 @@
 'use client'
 import { BackupListAll, Directory, Olt } from "@/app/types/OltTypes";
+
 import { useEffect, useState, useCallback } from "react";
 
 interface UseFetchReturn {
@@ -40,6 +41,7 @@ const useFetch = (): UseFetchReturn => {
             }
             const data = await response;
             setOlts(data);
+
             return data;
         } catch (err) {
             setError(err instanceof Error ? err : new Error('Erro desconhecido'));
@@ -48,6 +50,7 @@ const useFetch = (): UseFetchReturn => {
     };
 
     const fetchDataOltBkp = useCallback(async (data?: Olt[]) => {
+
         try {
             const oltsToFetch = data || olts;
             const backupPromises = oltsToFetch.map(async (olt) => {

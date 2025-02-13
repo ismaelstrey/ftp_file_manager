@@ -58,6 +58,26 @@ export async function PUT(request: Request) {
 
 export async function PATCH(request: Request) {
   const data: FtpServer = await request.json();
+  const oltBusca = await prisma.ftpServer.findMany({
+    where: {
+      active: true,
+    },
+  })
+
+  if (oltBusca) {
+    oltBusca.map(async (olt) => {
+      await prisma.ftpServer.update({
+        where: {
+          id: olt.id,
+        },
+        data: {
+          active: false,
+        },
+      });
+    })
+
+  }
+
   try {
     const directory = await prisma.ftpServer.update({
       where: {
