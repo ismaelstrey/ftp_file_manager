@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FtpServerType } from "@/app/types/FtpServersTypes";
+import useFetch from "./useFetch";
 
 const useFtpServer = () => {
   const [ftpServers, setFtpServers] = useState<FtpServerType[]>([]);
+
+  const { fetchDataOlts } = useFetch();
 
   const getAllFtpServer = async (): Promise<void> => {
     const response = await axios.get("/api/ftp_server");
@@ -16,7 +19,8 @@ const useFtpServer = () => {
 
   const togleOlt = async (id: number, active: boolean): Promise<void> => {
     await axios.patch("/api/ftp_server", { id, active });
-    getAllFtpServer();
+    await getAllFtpServer();
+    fetchDataOlts();
   };
 
   return { getAllFtpServer, ftpServers, togleOlt };
