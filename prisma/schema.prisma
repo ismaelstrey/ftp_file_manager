@@ -28,6 +28,7 @@ model Task {
 
 model FtpServer {
     id           Int            @id @default(autoincrement())
+    name         String?
     host         String
     port         Int            @default(21)
     username     String

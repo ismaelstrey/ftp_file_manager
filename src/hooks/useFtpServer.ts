@@ -14,7 +14,12 @@ const useFtpServer = () => {
     getAllFtpServer();
   }, []);
 
-  return { getAllFtpServer, ftpServers };
+  const togleOlt = async (id: number, active: boolean): Promise<void> => {
+    await axios.patch("/api/ftp_server", { id, active });
+    getAllFtpServer();
+  };
+
+  return { getAllFtpServer, ftpServers, togleOlt };
 };
 
 export default useFtpServer;
