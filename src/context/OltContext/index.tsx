@@ -27,7 +27,6 @@ export const OltProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     const togleOlt = async (id: number, active: boolean) => {
         await handleTogleOlt(id, active);
         await getAllFtpServer();
-
         await fetchDataOltBkp();
         await fetchDataOlts();
 
