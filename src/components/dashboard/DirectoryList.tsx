@@ -14,7 +14,7 @@ interface DirectoryListProps {
 
 export default function DirectoryList({ directories, onDelete }: DirectoryListProps) {
     return (
-        <div className="bg-white rounded-xl shadow-sm p-6">
+        <div className="bg-white rounded-xl shadow-xs p-6">
             <h2 className="text-xl font-semibold mb-4">Diretórios Monitorados</h2>
             <div className="space-y-3">
                 {directories.map((dir) => (

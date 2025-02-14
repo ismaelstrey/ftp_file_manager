@@ -21,7 +21,7 @@ export default function AddDirectoryForm({ onAdd }: AddDirectoryFormProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm p-6">
+        <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-xs p-6">
             <h2 className="text-xl font-semibold mb-4">Adicionar Diretório</h2>
             <div className="flex gap-3">
                 <input
@@ -29,7 +29,7 @@ export default function AddDirectoryForm({ onAdd }: AddDirectoryFormProps) {
                     value={path}
                     onChange={(e) => setPath(e.target.value)}
                     placeholder="Caminho do diretório"
-                    className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="flex-1 px-4 py-2 border rounded-lg focus:outline-hidden focus:ring-2 focus:ring-blue-500"
                 />
                 <motion.button
                     whileHover={{ scale: 1.02 }}

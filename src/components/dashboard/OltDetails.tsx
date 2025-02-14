@@ -8,7 +8,7 @@ import OltDetail from './_oltDetail';
 export default function OltDetails({ oltData }: { oltData?: BackupListAll }) {
     const router = useRouter();
     return (
-        <div className="bg-white rounded-xl shadow-sm p-6">
+        <div className="bg-white rounded-xl shadow-xs p-6">
             <div className='flex justify-between'>
                 <h2 className="text-xl font-semibold mb-4">Olts monitoradas </h2>
                 <ArrowUturnLeftIcon title='Voltar' onClick={() => router.back()} className="h-5 w-5 text-blue-500 mr-8 cursor-pointer hover:scale-125" />

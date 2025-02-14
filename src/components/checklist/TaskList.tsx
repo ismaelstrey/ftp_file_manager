@@ -33,18 +33,18 @@ export default function TaskList() {
                                 </p>
                                 <div className='flex w-full gap-8 justify-between'>
                                     {task.isContinuous && (
-                                        <span className="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded mt-2">
+                                        <span className="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-sm mt-2">
                                             Tarefa Contínua
                                         </span>
                                     )}
                                     {task.status === 'completed' && (
                                         <div className=' w-full justify-between'>
-                                            <span className="inline-block px-2 py-1 text-xs bg-blue-100 text-green-800 rounded mt-2">
+                                            <span className="inline-block px-2 py-1 text-xs bg-blue-100 text-green-800 rounded-sm mt-2">
                                                 Tarefa completa <CheckCircleIcon className="h-4 w-4 inline-block" />
                                             </span>
                                             <span>
                                                 {task.completedAt && (
-                                                    <span className="inline-block px-2 py-1 text-xs bg-blue-100 text-green-800 rounded mt-2">
+                                                    <span className="inline-block px-2 py-1 text-xs bg-blue-100 text-green-800 rounded-sm mt-2">
                                                         Realizada em: {new Date(task.completedAt).toLocaleString()}
                                                     </span>
                                                 )}

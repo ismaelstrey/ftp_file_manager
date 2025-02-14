@@ -9,7 +9,7 @@ interface OltListProps {
 export default function OltList({ olts }: OltListProps) {
 
     return (
-        <div className="bg-white rounded-xl shadow-sm p-6">
+        <div className="bg-white rounded-xl shadow-xs p-6">
             <div className='flex justify-between'>
                 <h2 className="text-xl font-semibold mb-4">Olts monitoradas </h2>
                 <span>Total: {olts.length}</span></div>
