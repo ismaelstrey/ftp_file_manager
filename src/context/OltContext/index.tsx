@@ -4,14 +4,12 @@ import { FtpServerType } from '@/app/types/FtpServersTypes';
 import { BackupListAll, Olt } from '@/app/types/OltTypes';
 import useFetch from '@/hooks/useFetch';
 import useFtpServer from '@/hooks/useFtpServer';
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import React, { createContext, useContext, ReactNode, useEffect } from 'react';
 
 
 interface OltContextType {
-    state: any;
     olts?: Olt[];
     backup?: BackupListAll[];
-    setState: (state: any) => void;
     ftpServers: FtpServerType[];
     togleOlt: (id: number, active: boolean) => Promise<void>;
 }
@@ -20,7 +18,7 @@ const OltContext = createContext<OltContextType | undefined>(undefined);
 
 // Provedor do contexto
 export const OltProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [state, setState] = useState({});
+
     const { olts, backup, fetchDataOltBkp, fetchDataOlts } = useFetch();
     const { ftpServers, handleTogleOlt, getAllFtpServer } = useFtpServer();
 
@@ -41,7 +39,7 @@ export const OltProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
 
     return (
-        <OltContext.Provider value={{ state, olts, backup, setState, ftpServers, togleOlt }}>
+        <OltContext.Provider value={{ olts, backup, ftpServers, togleOlt }}>
             {children}
         </OltContext.Provider>
     );

@@ -1,5 +1,5 @@
 import { sumSizes } from "@/helper/conversor";
-import { addDirectory, removeDirectory, getDirectoryFiles } from "@/helper/ftp";
+import { removeDirectory, getDirectoryFiles } from "@/helper/ftp";
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 

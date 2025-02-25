@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FtpServerType } from "@/app/types/FtpServersTypes";
-import useFetch from "./useFetch";
+
 
 const useFtpServer = () => {
   const [ftpServers, setFtpServers] = useState<FtpServerType[]>([]);

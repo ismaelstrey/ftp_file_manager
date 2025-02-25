@@ -2,6 +2,7 @@
 import { BackupListAll, Directory, Olt } from "@/app/types/OltTypes";
 
 import { useEffect, useState, useCallback } from "react";
+import useFtpServer from "./useFtpServer";
 
 interface UseFetchReturn {
     directories: Directory[];
@@ -26,12 +27,15 @@ const useFetch = (): UseFetchReturn => {
     const [olts, setOlts] = useState<Olt[]>([]);
     const [backup, setBackup] = useState<BackupListAll[]>();
     const [error, setError] = useState<Error | null>(null);
+    const { ftpServers } = useFtpServer()
     const [stats, setStats] = useState({
         totalDirs: 0,
         totalOlts: 0,
         lastBackup: '',
         successRate: '0%',
     });
+
+    console.log(ftpServers)
 
     const fetchDataOlts = async () => {
         try {
@@ -41,7 +45,6 @@ const useFetch = (): UseFetchReturn => {
             }
             const data = await response;
             setOlts(data);
-
             return data;
         } catch (err) {
             setError(err instanceof Error ? err : new Error('Erro desconhecido'));
@@ -78,22 +81,23 @@ const useFetch = (): UseFetchReturn => {
             setError(err instanceof Error ? err : new Error('Erro ao carregar diretórios'));
         }
     };
+    const fetchData = async () => {
+        try {
+            setLoading(true);
+            const data = await fetchDataOlts();
+            await fetchDataOltBkp(data);
+        } catch (error) {
+            console.error('Erro ao carregar dados:', error);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const data = await fetchDataOlts();
-                await fetchDataOltBkp(data);
-            } catch (error) {
-                console.error('Erro ao carregar dados:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
 
         fetchData();
-    }, []);
+    }, [ftpServers]);
+
 
     return {
         directories,
