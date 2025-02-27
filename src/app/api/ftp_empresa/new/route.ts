@@ -1,10 +1,15 @@
 import { prisma } from "@/lib/prisma";
-import { FtpEmpresal } from "@prisma/client";
+import { FtpEmpresa } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const directories = await prisma.ftpEmpresal.findMany({});
+    const directories = await prisma.ftpEmpresa.findMany({
+
+      select: {
+        server: true,
+      }
+    });
     return NextResponse.json(directories);
   } catch (error) {
     console.log(error);
@@ -13,30 +18,15 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const data: FtpEmpresal = await request.json();
-
-  if (data.id) {
-    const existFtpServer = await prisma.ftpServer.findFirst({
-      where: {
-        id: data.id,
-      },
-    });
-    if (!existFtpServer) {
-      return new Response("Failed servidor selecionado não existe", {
-        status: 500,
-      });
-    }
-    console.log(existFtpServer);
-  }
+  const data: FtpEmpresa = await request.json();
+  console.log(data);
 
   try {
-    const directory = await prisma.ftpEmpresal.create({
-      data,
-    });
+    const directory = await prisma.ftpEmpresa.create({ data });
     return NextResponse.json(directory);
   } catch (error) {
     console.error(error);
-    return new Response("Failed to add directory", {
+    return new Response("Failed to add empresa", {
       status: 500,
     });
   }
@@ -44,7 +34,7 @@ export async function POST(request: Request) {
 export async function DELETE(request: Request) {
   const { id } = await request.json();
   try {
-    const directory = await prisma.ftpEmpresal.delete({
+    const directory = await prisma.ftpEmpresa.delete({
       where: {
         id,
       },
@@ -57,9 +47,9 @@ export async function DELETE(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  const data: FtpEmpresal = await request.json();
+  const data: FtpEmpresa = await request.json();
   try {
-    const directory = await prisma.ftpEmpresal.update({
+    const directory = await prisma.ftpEmpresa.update({
       where: {
         id: data.id,
       },
@@ -73,9 +63,9 @@ export async function PUT(request: Request) {
 }
 
 export async function PATCH(request: Request) {
-  const data: FtpEmpresal = await request.json();
+  const data: FtpEmpresa = await request.json();
   try {
-    const directory = await prisma.ftpEmpresal.update({
+    const directory = await prisma.ftpEmpresa.update({
       where: {
         id: data.id,
       },

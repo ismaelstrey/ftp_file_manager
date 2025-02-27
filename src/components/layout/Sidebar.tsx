@@ -1,5 +1,5 @@
 'use client';
-import { HomeIcon, FolderIcon, ClockIcon, CogIcon, TableCellsIcon, CheckIcon } from '@heroicons/react/24/outline';
+import { HomeIcon, FolderIcon, ClockIcon, CogIcon, TableCellsIcon, CheckIcon, BuildingStorefrontIcon, ServerIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
@@ -9,6 +9,8 @@ const menuItems = [
     { name: 'Diretórios', icon: FolderIcon, href: '/page/diretorios' },
     { name: 'Histórico', icon: ClockIcon, href: '/page/historico' },
     { name: 'Checklist', icon: CheckIcon, href: '/page/checklist' },
+    { name: 'Empresas', icon: BuildingStorefrontIcon, href: '/page/empresas' },
+    { name: 'FTPs Server', icon: ServerIcon, href: '/page/ftpServer' },
     { name: 'Configurações', icon: CogIcon, href: '/page/configuracoes' },
 ];
 

@@ -1,23 +1,27 @@
 'use client';
 import OltDetails from '@/components/dashboard/OltDetails';
-import useFetch from '@/hooks/useFetch'
+import { useQuery } from '@tanstack/react-query';
 import { use } from 'react';
-
 interface PageParams {
     params: Promise<{ olt: string }>
 };
-
-
 export default function PageOLT({ params }: PageParams) {
-    const { loading, backup } = useFetch();
     const { olt } = use(params)
-    const oltName = backup?.find(oltFilter => oltFilter.olt === olt);
-
+    const { isPending, error, data: bkpOlt } = useQuery({
+        queryKey: ['oltName', olt],
+        queryFn: () =>
+            fetch(`/api/olts/bkp/${olt}`).then((res) =>
+                res.json(),
+            ),
+    },
+    )
+    if (isPending) return `${olt} Loading...`
+    if (error) return 'An error has occurred: ' + error.message
     return (
         <main className="ml-64 p-8">
             <h1 className="text-2xl font-bold mb-8">OLTs {olt}</h1>
-            {loading || !oltName ? 'Carregando...' :
-                <OltDetails oltData={oltName} />}
+            {isPending || !bkpOlt ? 'Carregando...' :
+                <OltDetails oltData={bkpOlt} />}
         </main>
     )
 }

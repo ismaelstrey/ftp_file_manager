@@ -1,55 +1,35 @@
-'use client'
-
-import { FtpServerType } from '@/app/types/FtpServersTypes';
-import { BackupListAll, Olt } from '@/app/types/OltTypes';
-import useFetch from '@/hooks/useFetch';
-import useFtpServer from '@/hooks/useFtpServer';
-import React, { createContext, useContext, ReactNode, useEffect } from 'react';
-
+'use client';
+import { FtpServerType } from "@/app/types/FtpServersTypes";
+import { Olt } from "@/app/types/OltTypes";
+import useFetch from "@/hooks/useFetch";
+import useFtpServer from "@/hooks/useFtpServer";
+import React, { createContext, useContext, ReactNode } from 'react';
 
 interface OltContextType {
     olts?: Olt[];
-    backup?: BackupListAll[];
-    ftpServers: FtpServerType[];
-    togleOlt: (id: number, active: boolean) => Promise<void>;
+    ftpServers?: FtpServerType[];
+    directories?: FtpServerType[] | [];
+    toggleOlt: (id: number, active: boolean) => Promise<void>;
 }
-// Criação do contexto
+// Create context
 const OltContext = createContext<OltContextType | undefined>(undefined);
-
-// Provedor do contexto
+// Provider component
 export const OltProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-
-    const { olts, backup, fetchDataOltBkp, fetchDataOlts } = useFetch();
-    const { ftpServers, handleTogleOlt, getAllFtpServer } = useFtpServer();
-
-    const togleOlt = async (id: number, active: boolean) => {
-        await handleTogleOlt(id, active);
-        await getAllFtpServer();
-        await fetchDataOltBkp();
-        await fetchDataOlts();
-
-    };
-
-    useEffect(() => {
-
-        console.log(backup);
-    }, [ftpServers, backup]);
-
-    // Estado inicial
-
-
+    const { olts, directories, ftpServers } = useFetch();
+    console.log(olts)
+    const { toggleOlt: handleToggleOlt } = useFtpServer();
+    const toggleOlt = async (id: number, active: boolean) => await handleToggleOlt({ id, active });
     return (
-        <OltContext.Provider value={{ olts, backup, ftpServers, togleOlt }}>
+        <OltContext.Provider value={{ olts, ftpServers, toggleOlt, directories }}>
             {children}
         </OltContext.Provider>
     );
 };
-
-// Hook personalizado para usar o contexto
+// Custom hook to use the context
 export const useOltContext = () => {
     const context = useContext(OltContext);
     if (!context) {
-        throw new Error('useOltContext deve ser usado dentro de um OltProvider');
+        throw new Error('useOltContext must be used within an OltProvider');
     }
     return context;
 };

@@ -8,26 +8,26 @@ interface AddTaskFormProps {
     onClose: () => void;
 }
 
-
 export default function AddTaskForm({ onClose }: AddTaskFormProps) {
-    const [formData, setFormData] = useState<Task>({
-        id: 0,
+    const [formData, setFormData] = useState<Omit<Task, 'id' | 'createdAt' | 'updatedAt' | 'completedAt'>>({
         title: '',
         description: '',
         isContinuous: false,
         status: 'pending',
         dueDate: undefined,
-        completedAt: undefined,
-        createdAt: new Date()
     });
 
-    const { createTask } = useChecklist()
+    const { createTask } = useChecklist();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        createTask(formData);
-        // Implementar lógica de criação de tarefa
-        onClose();
+        try {
+            await createTask(formData);
+            onClose();
+        } catch (error) {
+            console.error('Error creating task:', error);
+            // You might want to show an error message to the user here
+        }
     };
 
     return (
@@ -81,7 +81,7 @@ export default function AddTaskForm({ onClose }: AddTaskFormProps) {
                             </label>
                             <input
                                 type="date"
-                                value={formData.dueDate ? formData.dueDate.toISOString().split('T')[0] : ''}
+                                value={formData.dueDate ? new Date(formData.dueDate).toISOString().split('T')[0] : ''}
                                 onChange={(e) => setFormData({ ...formData, dueDate: e.target.value ? new Date(e.target.value) : undefined })}
                                 className="w-full px-3 py-2 border rounded-lg"
                             />
@@ -106,4 +106,4 @@ export default function AddTaskForm({ onClose }: AddTaskFormProps) {
             </div>
         </motion.div>
     );
-} 
+}

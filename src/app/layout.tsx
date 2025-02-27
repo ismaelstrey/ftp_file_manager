@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   description: "Sistema de monitoramento de FTP",
 };
 
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,12 +31,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+
         <Main>
           <Sidebar />
           {children}
         </Main>
-
-
 
       </body>
     </html>

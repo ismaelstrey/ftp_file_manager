@@ -4,15 +4,14 @@ import { useChecklist } from '@/hooks/useChecklist';
 import { CheckCircleIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
 
 export default function TaskList() {
-    const { tasks, loading, completeTask, resetTask } = useChecklist();
+    const { tasks, isLoading, completeTask, resetTask, error } = useChecklist();
 
-    console.log(tasks);
+    if (isLoading) return <div>Carregando...</div>;
+    if (error) return <div>Erro ao carregar tarefas: {error.message}</div>;
 
     const sortedTasks = tasks.sort((a, b) => {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     });
-
-    if (loading) return <div>Carregando...</div>;
 
     return (
         <div className="space-y-4">
@@ -76,4 +75,4 @@ export default function TaskList() {
             </div>
         </div>
     );
-} 
+}

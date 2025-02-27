@@ -1,10 +1,22 @@
-export interface FtpServerType {
-  active: boolean;
+import { FtpEmpresaType } from "./FtpEmpresaType";
+
+export interface FtpConnectionConfig {
   name?: string;
-  createdAt: Date;
   host: string;
-  id?: number;
-  password: string;
-  port: number;
   username: string;
+  password: string;
+  active?: boolean;
+  port?: number;
+};
+export interface FtpServerType extends FtpConnectionConfig {
+  active: boolean;
+  createdAt: Date;
+  id?: number;
 }
+export interface FtpServerAllType extends FtpServerType {
+  FtpEmpresa: FtpEmpresaType[];
+}
+
+
+
+
