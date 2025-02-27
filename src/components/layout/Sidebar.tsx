@@ -2,6 +2,8 @@
 import { HomeIcon, FolderIcon, ClockIcon, CogIcon, TableCellsIcon, CheckIcon, BuildingStorefrontIcon, ServerIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { SlArrowRight } from 'react-icons/sl';
 
 const menuItems = [
     { name: 'Dashboard', icon: HomeIcon, href: '/' },
@@ -15,28 +17,40 @@ const menuItems = [
 ];
 
 export default function Sidebar() {
+    const [isOpen, setIsOpen] = useState(false);
     return (
-        <motion.div
-            initial={{ x: -100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            className="h-screen w-64 bg-gray-900 text-white p-4 fixed left-0 top-0"
-        >
-            <div className="mb-8">
-                <h1 className="text-xl font-bold">FTP Backup Manager</h1>
-            </div>
+        <div>
+            {
+                isOpen ? (<motion.div
+                    initial={{ x: -100, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    className="min-h-screen h-full w-64 bg-gray-900 text-white p-4 static left-0 top-0 rounded-r-4xl"
 
-            <nav>
-                {menuItems.map((item) => (
-                    <Link
-                        key={item.name}
-                        href={item.href}
-                        className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors"
-                    >
-                        <item.icon className="h-5 w-5" />
-                        <span>{item.name}</span>
-                    </Link>
-                ))}
-            </nav>
-        </motion.div>
+                >
+                    <div className="mb-8 text-amber-600">
+                        <h1 className="text-xl font-bold">FTP Backup Manager</h1>
+                    </div>
+                    <div className='fixed top-0 left-0 w-8 h-screen rotate-180 flex items-center gap-4 cursor-pointer'>
+                        <SlArrowRight title='fechar menu' size={30} onClick={() => setIsOpen(!isOpen)} className='hover:scale-125 transition-all' />
+                    </div>
+                    <nav>
+                        {menuItems.map((item) => (
+                            <Link
+                                key={item.name}
+                                href={item.href}
+                                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 hover:text-amber-600 transition-colors"
+                            >
+                                <item.icon className="h-5 w-5" />
+                                <span>{item.name}</span>
+                            </Link>
+                        ))}
+                    </nav>
+                </motion.div>) : (
+                    <div className='fixed top-0 left-0 w-16 h-screen  flex items-center gap-4 cursor-pointer'>
+                        <SlArrowRight title='Abrir menu' size={30} onClick={() => setIsOpen(!isOpen)} className='hover:scale-125 transition-all' />
+                    </div>
+                )
+            }
+        </div>
     );
 } 

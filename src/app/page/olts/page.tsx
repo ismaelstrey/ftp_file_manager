@@ -10,7 +10,7 @@ export default function PageOLT() {
   const { olts } = useFetch()
   const filtra = ftpServers?.filter((list) => list.active === true);
   return (
-    <main className="ml-64 p-8">
+    <main className=" p-8 flex w-full flex-col">
       <h1 className="text-2xl font-bold mb-8">
         OLTs / {filtra && filtra[0]?.name} / {filtra && filtra[0]?.host}
       </h1>

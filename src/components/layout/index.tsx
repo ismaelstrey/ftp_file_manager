@@ -17,7 +17,7 @@ const queryClient = new QueryClient({
 
 export default function Main({ children }: { children: React.ReactNode }) {
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="flex w-full min-h-screen bg-gray-50">
             <Toaster />
             <QueryClientProvider client={queryClient}>
                 <OltProvider>

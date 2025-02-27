@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
     provider = "sqlite"
-    url      = "file:./prod.db"
+    url      = "file:./data.db"
 }
 
 model MonitoredDirectory {
@@ -27,31 +27,23 @@ model Task {
 }
 
 model FtpServer {
-    id           Int            @id @default(autoincrement())
-    name         String?
-    host         String
-    port         Int            @default(21)
-    username     String
-    password     String
-    active       Boolean        @default(false)
-    createdAt    DateTime       @default(now())
-    ftpDirectory FtpDirectory[]
-    ftpEmpresa   FtpEmpresa[]
-}
-
-model FtpDirectory {
-    id          Int       @id @default(autoincrement())
-    status      Boolean   @default(true)
-    server      FtpServer @relation(fields: [ftpServerId], references: [id])
-    createdAt   DateTime  @default(now())
-    ftpServerId Int
+    id            Int         @id @default(autoincrement())
+    name          String?
+    host          String
+    port          Int         @default(21)
+    username      String
+    password      String
+    active        Boolean     @default(false)
+    createdAt     DateTime    @default(now())
+    ftpDirectory  String?
+    ftp_empresa   FtpEmpresa? @relation(fields: [ftp_empresaId], references: [id])
+    ftp_empresaId Int?
 }
 
 model FtpEmpresa {
-    id          Int        @id @default(autoincrement())
-    active      Boolean?   @default(true)
-    name        String
-    server      FtpServer? @relation(fields: [ftpServerId], references: [id])
-    createdAt   DateTime?  @default(now())
-    ftpServerId Int?
+    id         Int         @id @default(autoincrement())
+    active     Boolean?    @default(true)
+    name       String
+    createdAt  DateTime?   @default(now())
+    ftp_server FtpServer[]
 }

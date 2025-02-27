@@ -1,53 +1,62 @@
 'use client';
-import React, { useState } from 'react';
-import { FaServer, FaEye, FaEyeSlash, FaToggleOff } from 'react-icons/fa';
-import { useQuery } from '@tanstack/react-query';
+import React from 'react';
+import { FaServer, FaToggleOff } from 'react-icons/fa';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { FtpServerAllType } from '@/app/types/FtpServersTypes';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+
 
 export default function FtpList() {
+    const queryClient = useQueryClient()
     const getAllFtpServers = async (): Promise<FtpServerAllType[]> => {
         const response = await fetch('/api/ftp_server');
         return response.json();
     }
 
-    const { data: ftpServer, isLoading } = useQuery({ queryKey: ['ftpServer'], queryFn: getAllFtpServers })
+    const { data: ftpServer } = useQuery({ queryKey: ['ftpServer'], queryFn: getAllFtpServers })
+    const mutate = useMutation({
+        mutationKey: ['ftpServer'],
+        mutationFn: async (server: { active: boolean, id: number }) => {
+            return axios.patch('/api/ftp_server', { id: server.id, active: server.active });
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['ftpServer'] });
+            toast.success('Servidor FTP atualizado com sucesso!');
+        }
+    });
 
-
-    const [showServer, setShowServer] = useState<boolean>(false);
-
-    const toggleServer = (): void => {
-        setShowServer(!showServer);
-    };
-    console.log(ftpServer);
+    const toggleOlt = async (server: { active: boolean, id: number }) => {
+        mutate.mutate(server);
+    }
 
     return (
-        <div>
-            <h1>EmpresaList</h1>
-            <ul>
-                {ftpServer?.map((empresa, index) => (
+        <div className='container mx-auto p-32'>
+            <h1>Ftp LIST</h1>
+            <ul className='flex flex-wrap gap-4'>
+                {ftpServer?.map(({ active, host, password, name, id }, index) => (
                     <li key={index} className='border border-b-gray-400/50 p-4 bg-zinc-400/10 rounded-sm min-w-80' >
-                        <h2>{empresa.name} </h2>
                         <div className='flex justify-between items-center border border-b-gray-400/50 p-4 rounded-full bg-zinc-400/10 shadow-sm shadow-emerald-300'>
-                            <span><FaServer size={50} className={`${empresa.active ? 'fill-green-500' : 'fill-red-500'}`} /></span>
-                            <p> {empresa.active ? <FaToggleOff size={30} className='fill-green-500' /> : <FaToggleOff size={30} className='fill-red-500' />}</p>
-                        </div>
-                        <div className='flex w-full justify-center content-center items-center'>
-                            <span title={showServer ? 'Ocultar servidor' : 'Mostrar servidor'} className='cursor-pointer p-2' onClick={() => toggleServer()}>
-                                {showServer ? <FaEyeSlash size={30} /> : <FaEye size={30} />}
-                            </span>
-                        </div>
-                        {empresa?.server && showServer && (
-
-                            <div className='bg-white rounded-lg p-4'>
-                                <h3>Servidor:</h3>
-                                <p>ID: {empresa.server?.id}</p>
-                                <p>Host: {empresa.server.host}</p>
-                                <p>Porta: {empresa.server.port}</p>
-                                <p>Usuário: {empresa.server.username}</p>
-                                <p>Senha: {empresa.server.password}</p>
-                                <p>Criado em: {new Date(empresa.server.createdAt).toLocaleString()}</p>
+                            <span><FaServer size={50} className={`${active ? 'fill-green-500' : 'fill-red-500'}`} /></span>
+                            <div className='text-small text-blue-500/50 hover:text-blue-500'>
+                                <p>id# {id}</p>
+                                <h2>Nome: {name} </h2>
+                                <p>Host: {host}</p>
+                                <p>Senha: {password}</p>
                             </div>
-                        )}
+                            {
+                                id &&
+                                <button onClick={() => toggleOlt({ active: !active, id })}>
+                                    {
+                                        active
+                                            ? <FaToggleOff size={30} className='fill-green-500' />
+                                            : <FaToggleOff size={30} className='fill-red-500' />
+                                    }
+                                </button>
+                            }
+                        </div>
+                        <div>
+                        </div>
                     </li>
                 ))}
             </ul>

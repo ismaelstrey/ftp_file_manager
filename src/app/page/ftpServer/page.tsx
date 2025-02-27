@@ -1,9 +1,9 @@
-import FtpServer from '@/components/pages/FtpServer'
+import FtpServer from '@/components/pages/ftpServer'
 import React from 'react'
 
 export default function PageFtpServer() {
     return (
-        <div className='flex justify-center w-full h-screen'>
+        <div className='flex justify-center w-full min-h-screen'>
             <FtpServer />
         </div>
     )

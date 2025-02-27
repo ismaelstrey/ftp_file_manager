@@ -11,8 +11,7 @@ export async function GET() {
         name: true,
         active: true,
         createdAt: true,
-        ftpServerId: true,
-        server: true,
+        ftp_server: true
       }
     });
     return NextResponse.json(directories);

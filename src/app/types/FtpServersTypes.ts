@@ -10,11 +10,12 @@ export interface FtpConnectionConfig {
 };
 export interface FtpServerType extends FtpConnectionConfig {
   active: boolean;
+  ftp_empresaId?: number;
   createdAt: Date;
   id?: number;
 }
 export interface FtpServerAllType extends FtpServerType {
-  FtpEmpresa: FtpEmpresaType[];
+  ftp_empresa: FtpEmpresaType[];
 }
 
 
