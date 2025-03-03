@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function ServerFtpItem({ id, host, port, username, password, createdAt, name }: FtpServerType) {
     return (
-        <div className='bg-white rounded-lg p-4'>
+        <div className='rounded-lg p-4'>
             <h3>Servidor: {name}</h3>
             <p>ID: {id}</p>
             <p>Host: {host}</p>

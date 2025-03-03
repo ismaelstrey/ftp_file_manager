@@ -15,7 +15,7 @@ export default function FtpList() {
         return response.json();
     }
 
-    const { data: ftpServer } = useQuery({ queryKey: ['ftpServer'], queryFn: getAllFtpServers })
+    const { data: ftpServer, isLoading } = useQuery({ queryKey: ['ftpServer'], queryFn: getAllFtpServers })
     const updateFtpServer = useMutation({
         mutationKey: ['ftpServer'],
         mutationFn: async (server: { active: boolean, id: number }) => {

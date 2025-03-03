@@ -53,8 +53,8 @@
 }
 :root {
  
-  --background: #fff;
-  --foreground: #000;
+  /* --background: #fff;
+  --foreground: #000; */
   
 }
 [data-theme='dark'] {

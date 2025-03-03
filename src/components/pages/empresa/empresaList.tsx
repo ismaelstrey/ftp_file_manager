@@ -5,6 +5,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { FaServer, FaEye, FaEyeSlash, FaToggleOff } from 'react-icons/fa';
 import ServerFtpItem from '../ftpServer/_ftpItem';
+import { motion } from 'motion/react';
 
 export default function EmpresaList() {
     // const [empresas, setEmpresas] = useState([
@@ -46,7 +47,6 @@ export default function EmpresaList() {
                         <h2>{empresa.name} </h2>
                         <div className='flex justify-between items-center border border-b-gray-400/50 p-4 rounded-full bg-zinc-400/10 shadow-sm shadow-emerald-300'>
                             <span><FaServer size={50} className={`${empresa.active ? 'fill-green-500' : 'fill-red-500'}`} /></span>
-
                             <p> {empresa.active ? <FaToggleOff size={30} className='fill-green-500' /> : <FaToggleOff size={30} className='fill-red-500' />}</p>
                             <p> {empresa.active ? 'Ativo' : 'Inativo'}</p>
                             <span title='Quantidade de servidores' className=' w-8 h-8 flex justify-center items-center rounded-full bg-gray-900 text-white font-semibold'>{empresa.ftp_server?.length}</span>
@@ -59,12 +59,18 @@ export default function EmpresaList() {
                                     </span>
                                 </div>
                                 {showServer && (
-                                    <div className='bg-white rounded-lg p-4'>
+                                    <motion.div
+                                        initial={{ y: -100, opacity: 0 }}
+                                        exit={{ y: -100, opacity: 0 }}
+                                        transition={{ duration: 0.8 }}
+                                        animate={{ y: 0, opacity: 1 }}>
+                                        <div className=' rounded-lg p-4'>
 
-                                        {empresa.ftp_server.map((server, index) => (
-                                            <ServerFtpItem key={index} {...server} />
-                                        ))}
-                                    </div>
+                                            {empresa.ftp_server.map((server, index) => (
+                                                <ServerFtpItem key={index} {...server} />
+                                            ))}
+                                        </div>
+                                    </motion.div>
                                 )}
                             </>
                         }

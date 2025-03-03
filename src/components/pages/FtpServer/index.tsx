@@ -29,7 +29,7 @@ export default function FtpServer() {
 
 
     return (
-        <div>
+        <div className=' w-full'>
             <FtpServerForm handleFormSubmit={handleFormSubmit} />
             <FtpServerList />
         </div>

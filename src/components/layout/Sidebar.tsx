@@ -17,14 +17,16 @@ const menuItems = [
 ];
 
 export default function Sidebar() {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true); // Set default to true for consistent initial state
     return (
-        <div className='bg-black'>
+        <div className=''>
             {
                 isOpen ? (<motion.div
                     initial={{ x: -100, opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    exit={{ x: -100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
-                    className="min-h-screen h-full w-64 bg-gray-900 text-white p-4 static left-0 top-0 rounded-r-4xl"
+                    className="min-h-screen border-r-2 border-white/50 h-full w-64 bg-gray-900 text-white p-4 static left-0 top-0 rounded-r-4xl"
 
                 >
                     <div className="mb-8 text-amber-600">

@@ -9,6 +9,7 @@ export async function GET() {
         ftp_empresa: true,
       },
     });
+    console.log("Fetched directories:", directories); // Log the fetched data
     return NextResponse.json(directories);
   } catch (error) {
     console.log(error);
