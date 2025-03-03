@@ -8,5 +8,5 @@ export interface FtpEmpresaType {
     ftpServerId?: number;
 }
 export interface FtpEmpresaAllType extends FtpEmpresaType {
-    server: FtpServerType
+    ftp_server: FtpServerType[]
 }
