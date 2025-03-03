@@ -3,7 +3,7 @@ import { FtpServerType } from "./FtpServersTypes";
 export interface FtpEmpresaType {
     id?: number;
     name: string;
-    active: boolean;
+    active?: boolean;
     createdAt?: string;
     ftpServerId?: number;
 }

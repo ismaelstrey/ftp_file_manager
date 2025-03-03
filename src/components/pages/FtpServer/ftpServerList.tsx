@@ -46,14 +46,14 @@ export default function FtpList() {
 
     return (
         <div className='container mx-auto p-32'>
-            <h1>Ftp LIST</h1>
+            <h1 className='text-2xl font-bold mb-8'>Lista de servidores FTP</h1>
             <ul className='flex flex-wrap gap-4'>
-                {ftpServer?.map(({ active, host, password, name, id, ftp_empresa }, index) => (
+                {ftpServer?.map(({ active, host, password, name, id }, index) => (
                     <div key={index}>
-                        <li className='border border-b-gray-400/50 p-4 bg-zinc-400/10 rounded-sm min-w-80' >
-                            <div className='flex justify-between items-center border border-b-gray-400/50 p-4 rounded-full bg-zinc-400/10 shadow-sm shadow-emerald-300'>
+                        <li className='p-4 rounded-sm min-w-80' >
+                            <div className='flex justify-between items-center border-4 border-gray-400 p-4 rounded-full bg-zinc-400/10'>
                                 <span><FaServer size={50} className={`${active ? 'fill-green-500' : 'fill-red-500'}`} /></span>
-                                <div className='text-small text-blue-500/50 hover:text-blue-500'>
+                                <div className='text-small text-white hover:text-blue-500 px-4'>
                                     <p>id# {id}</p>
                                     <h2>Nome: {name} </h2>
                                     <p>Host: {host}</p>

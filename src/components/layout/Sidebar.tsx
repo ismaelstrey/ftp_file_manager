@@ -19,7 +19,7 @@ const menuItems = [
 export default function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);
     return (
-        <div>
+        <div className='bg-black'>
             {
                 isOpen ? (<motion.div
                     initial={{ x: -100, opacity: 0 }}
@@ -46,7 +46,7 @@ export default function Sidebar() {
                         ))}
                     </nav>
                 </motion.div>) : (
-                    <div className='fixed top-0 left-0 w-16 h-screen  flex items-center gap-4 cursor-pointer'>
+                    <div className='fixed top-0 left-0 w-16 h-screen text-white flex items-center gap-4 cursor-pointer'>
                         <SlArrowRight title='Abrir menu' size={30} onClick={() => setIsOpen(!isOpen)} className='hover:scale-125 transition-all' />
                     </div>
                 )

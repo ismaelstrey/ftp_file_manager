@@ -37,6 +37,7 @@
   If we ever want to remove these styles, we need to add an explicit border
   color utility to any element that depends on these defaults.
 */
+
 @layer base {
   *,
   ::after,
@@ -46,11 +47,19 @@
     border-color: var(--color-gray-200, currentColor);
   }
 }
-
+ transform-gpu:active {
+  transform: translateZ(0);
+  border: #ededed solid 1px;
+}
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+ 
+  --background: #fff;
+  --foreground: #000;
   
+}
+[data-theme='dark'] {
+  --background: black;
+  --foreground: white;
 }
 
 

@@ -2,8 +2,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaToggleOff } from 'react-icons/fa';
+import { FtpEmpresaType } from '@/app/types/FtpEmpresaType';
 
-export default function EmpresaForm() {
+export default function EmpresaForm({ handleFormSubmit }: { handleFormSubmit: ({ empresa }: { empresa: FtpEmpresaType }) => void }) {
     const [name, setName] = useState('');
     const [isActive, setIsActive] = useState(false);
 
@@ -11,9 +12,18 @@ export default function EmpresaForm() {
         e.preventDefault();
         setIsActive(!isActive);
     };
+    const empresa: FtpEmpresaType = {
+        name: name,
+        active: isActive,
+
+    }
     const salvarEmpresa = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        alert('Empresa salva com sucesso!');
+        if (!name) {
+            return;
+        }
+        handleFormSubmit({ empresa })
+
     };
 
     return (

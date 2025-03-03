@@ -28,7 +28,7 @@ export default function EmpresaList() {
         const response = await fetch('/api/ftp_empresa');
         return response.json();
     }
-    const { data: empresas } = useQuery({ queryKey: ['ftpServer'], queryFn: getAllEmpresas })
+    const { data: empresas } = useQuery({ queryKey: ['ftpEmpresa'], queryFn: getAllEmpresas })
 
     const [showServer, setShowServer] = useState<boolean>(false);
 
@@ -46,7 +46,10 @@ export default function EmpresaList() {
                         <h2>{empresa.name} </h2>
                         <div className='flex justify-between items-center border border-b-gray-400/50 p-4 rounded-full bg-zinc-400/10 shadow-sm shadow-emerald-300'>
                             <span><FaServer size={50} className={`${empresa.active ? 'fill-green-500' : 'fill-red-500'}`} /></span>
+
                             <p> {empresa.active ? <FaToggleOff size={30} className='fill-green-500' /> : <FaToggleOff size={30} className='fill-red-500' />}</p>
+                            <p> {empresa.active ? 'Ativo' : 'Inativo'}</p>
+                            <span title='Quantidade de servidores' className=' w-8 h-8 flex justify-center items-center rounded-full bg-gray-900 text-white font-semibold'>{empresa.ftp_server?.length}</span>
                         </div>
                         {empresa?.ftp_server && empresa?.ftp_server.length > 0 &&
                             <>

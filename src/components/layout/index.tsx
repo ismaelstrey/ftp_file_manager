@@ -1,7 +1,8 @@
 'use client'
 import { OltProvider } from '@/context/OltContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import React from 'react'
+import { ThemeProvider, useTheme } from 'next-themes'
+import React, { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast';
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -16,15 +17,20 @@ const queryClient = new QueryClient({
 });
 
 export default function Main({ children }: { children: React.ReactNode }) {
-    return (
-        <div className="flex w-full min-h-screen bg-gray-50">
-            <Toaster />
-            <QueryClientProvider client={queryClient}>
-                <OltProvider>
-                    {children}
-                </OltProvider></QueryClientProvider>
-        </div>
 
+    return (
+        <ThemeProvider defaultTheme={'light'} attribute={'data-theme'} >
+            <div className="flex w-full min-h-screen antialiased">
+
+                <Toaster />
+                <QueryClientProvider client={queryClient}>
+                    <OltProvider>
+                        {children}
+                    </OltProvider>
+                </QueryClientProvider>
+
+            </div>
+        </ThemeProvider>
 
     )
 }
