@@ -5,6 +5,9 @@ import { FaToggleOff } from 'react-icons/fa';
 import { FtpConnectionConfig } from '@/app/types/FtpServersTypes';
 
 import { LuEye, LuEyeClosed } from 'react-icons/lu';
+import { FtpEmpresaAllType } from '@/app/types/FtpEmpresaType';
+import { useQuery } from '@tanstack/react-query';
+import { on } from 'events';
 
 
 export default function FtpServerForm({ handleFormSubmit }: { handleFormSubmit: ({ ftp }: { ftp: FtpConnectionConfig }) => void }) {
@@ -12,22 +15,32 @@ export default function FtpServerForm({ handleFormSubmit }: { handleFormSubmit: 
     const [host, setHost] = useState('');
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const [active, setActive] = useState<boolean>(true);
-
+    const [ftp_empresaId, setFtp_empresaId] = useState<number>();
+    const [active, setActive] = useState<boolean>(false);
     const [port, setPort] = useState<number>(21);
     const [showForm, setShowForm] = useState<boolean>(false);
+
+    const getAllEmpresas = async (): Promise<FtpEmpresaAllType[]> => {
+        const response = await fetch("/api/ftp_empresa");
+        return response.json();
+    };
+    const { data: empresas } = useQuery({
+        queryKey: ["ftpEmpresa"],
+        queryFn: getAllEmpresas,
+    });
 
     const toggleActive = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         setActive(!active);
     };
     const ftp: FtpConnectionConfig = {
-        name: name,
-        host: host,
-        username: username,
-        password: password,
-        active: active,
-        port: port
+        name,
+        host,
+        username,
+        password,
+        active,
+        port,
+        ftp_empresaId
     }
     const salvarEmpresa = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
@@ -57,6 +70,20 @@ export default function FtpServerForm({ handleFormSubmit }: { handleFormSubmit: 
                     <h1 className="text-2xl font-bold mb-4">Cadastro FTP Server</h1>
 
                     <form className="space-y-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Empresa</label>
+                            <select className="mt-1 block bg-zinc-800 w-full border border-gray-300 rounded-md shadow-sm p-2"
+                                value={ftp_empresaId} onChange={(e) => setFtp_empresaId(parseInt(e.target.value))}
+                            >
+                                <option value="">Selecione uma empresa</option>
+                                {
+                                    empresas?.map((empresa, index) => (
+                                        <option key={index} value={empresa.id}>{empresa.name}</option>
+                                    ))
+                                }
+
+                            </select>
+                        </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Nome</label>
                             <input
@@ -112,7 +139,7 @@ export default function FtpServerForm({ handleFormSubmit }: { handleFormSubmit: 
                         <div className="flex justify-end content-between w-full gap-4">
                             <div className='flex justify-between items-center '>
                                 <label className="block text-sm font-medium text-gray-700 px-2">Status </label>
-                                <button className='cursor-pointer' onClick={toggleActive}>{active ? <FaToggleOff size={30} className='fill-green-500' /> : <FaToggleOff size={30} className='fill-red-500 rotate-180' />}</button>
+                                <button disabled className='cursor-pointer' onClick={toggleActive}>{active ? <FaToggleOff size={30} className='fill-green-500' /> : <FaToggleOff size={30} className='fill-red-500 rotate-180' />}</button>
                             </div>
                             <motion.button
                                 onClick={salvarEmpresa}

@@ -12,7 +12,7 @@ export default function ServerFtpItem({
 }: FtpServerType) {
   const [hidePassword, setHidePassword] = useState<boolean>(false);
   return (
-    <div className="rounded-lg p-4 pt-12 z-0 -mt-8">
+    <div className="rounded-lg p-4 pt-16 z-0 -mt-8">
       <h3 className="mt-6 mb-2 text-3xl">Servidor: {name}</h3>
       <hr />
       <p className="mt-4">ID: {id}</p>

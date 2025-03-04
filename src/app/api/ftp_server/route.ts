@@ -19,7 +19,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   const data: FtpServer = await request.json();
-  console.log(data);
+
   try {
     const directory = await prisma.ftpServer.create({
       data,

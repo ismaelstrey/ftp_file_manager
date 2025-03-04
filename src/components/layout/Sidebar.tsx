@@ -19,7 +19,7 @@ const menuItems = [
 export default function Sidebar() {
     const [isOpen, setIsOpen] = useState(true); // Set default to true for consistent initial state
     return (
-        <div className=''>
+        <div>
             {
                 isOpen ? (<motion.div
                     initial={{ x: -100, opacity: 0 }}

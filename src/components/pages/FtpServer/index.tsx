@@ -12,13 +12,14 @@ import FtpServerList from './ftpServerList';
 export default function FtpServer() {
     const queryClient = useQueryClient()
     const mutation = useMutation({
-        mutationKey: ['ftpServer'],
+        mutationKey: ['ftpServer', 'ftpEmpresa'],
         mutationFn: (server: FtpConnectionConfig) => {
             return axios.post('/api/ftp_server', server);
         },
         onSuccess: () => {
             toast.success('Servifdor FTP adicionado com sucesso!');
-            queryClient.invalidateQueries({ queryKey: ['ftpServer'] });
+            queryClient.invalidateQueries({ queryKey: ['ftpServer', 'ftpEmpresa'] });
+            queryClient.refetchQueries();
 
         },
     });

@@ -7,6 +7,7 @@ export interface FtpConnectionConfig {
   password: string;
   active?: boolean;
   port?: number;
+  ftp_empresaId?: number;
 };
 export interface FtpServerType extends FtpConnectionConfig {
   active: boolean;

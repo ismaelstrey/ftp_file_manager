@@ -27,7 +27,8 @@ export default function Main({ children }: { children: React.ReactNode }) {
             <QueryClientProvider client={queryClient}>
                 <OltProvider>
                     <Sidebar />
-                    {children}
+                    <div className="flex-1 p-4 container mx-auto">
+                        {children}</div>
                 </OltProvider>
             </QueryClientProvider>
 
