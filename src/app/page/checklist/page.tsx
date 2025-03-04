@@ -7,7 +7,7 @@ export default function ChecklistPage() {
     const [showAddForm, setShowAddForm] = useState(false);
 
     return (
-        <main className="ml-64 p-8">
+        <main className="pt-8">
             <div className="flex justify-between items-center mb-8">
                 <h1 className="text-2xl font-bold">Checklist de Tarefas</h1>
                 <button

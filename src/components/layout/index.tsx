@@ -1,21 +1,23 @@
 'use client'
-import { OltProvider } from '@/context/OltContext'
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import React from 'react'
 import { Toaster } from 'react-hot-toast';
 import Sidebar from './Sidebar';
-const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            staleTime: 1000 * 60 * 5, // 5 minutos (tempo antes de ser considerado "desatualizado")
-            refetchOnMount: false, // Não refazer a query ao montar o componente
-            refetchOnWindowFocus: false, // Não refazer a query ao alternar a aba
-            refetchOnReconnect: false, // Não refazer a query ao reestabelecer a conexão
-            gcTime: 10 * 60 * 1000, // 10 minutos
-        },
-    },
-});
+const queryClient = new QueryClient(
+    //     {
+    //     defaultOptions: {
+    //         queries: {
+    //             staleTime: 1000 * 60 * 5, // 5 minutos (tempo antes de ser considerado "desatualizado")
+    //             refetchOnMount: false, // Não refazer a query ao montar o componente
+    //             refetchOnWindowFocus: false, // Não refazer a query ao alternar a aba
+    //             refetchOnReconnect: false, // Não refazer a query ao reestabelecer a conexão
+    //             gcTime: 10 * 60 * 1000, // 10 minutos
+    //         },
+    //     },
+    // }
+);
 
 export default function Main({ children }: { children: React.ReactNode }) {
 
@@ -25,11 +27,11 @@ export default function Main({ children }: { children: React.ReactNode }) {
 
             <Toaster />
             <QueryClientProvider client={queryClient}>
-                <OltProvider>
-                    <Sidebar />
-                    <div className="flex-1 p-4 container mx-auto">
-                        {children}</div>
-                </OltProvider>
+
+                <Sidebar />
+                <div className="flex-1 p-4 container mx-auto">
+                    {children}</div>
+
             </QueryClientProvider>
 
         </div>

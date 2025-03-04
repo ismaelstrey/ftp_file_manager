@@ -29,7 +29,7 @@ export default function OltList({ olts }: OltListProps) {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                    className="flex items-center justify-between p-4 bg-zinc-600 rounded-lg hover:bg-zinc-700 transition-colors"
                 >
                     <div className="flex items-center gap-3">
                         <TableCellsIcon className="h-5 w-5 text-blue-500" />

@@ -1,8 +1,9 @@
 import { FtpEmpresaAllType } from "@/app/types/FtpEmpresaType";
 import React, { useState } from "react";
-import { FaServer, FaToggleOff } from "react-icons/fa";
+import { FaServer, FaToggleOff, FaTrashAlt } from "react-icons/fa";
 import { motion } from "motion/react";
 import ServerFtpItem from "../FtpServer/_ftpItem";
+import useEmpresa from "@/hooks/useEmpresa";
 
 export default function EmpresaItem({
   empresa,
@@ -10,6 +11,7 @@ export default function EmpresaItem({
   empresa: FtpEmpresaAllType;
 }) {
   const [showServer, setShowServer] = useState<boolean>(false);
+  const { deleteEmpresa } = useEmpresa()
   const toggleServer = (): void => {
     setShowServer(!showServer);
   };
@@ -20,7 +22,11 @@ export default function EmpresaItem({
         onClick={() => toggleServer()}
         className="flex flex-col z-10 relative bg-black  border border-gray-400/50 p-4 rounded-full "
       >
-        <h2 className="text-2xl font-semibold text-center">{empresa.name} </h2>
+        <span className="flex justify-between p-4">
+          <h2 className="text-2xl font-semibold text-center">{empresa.name} </h2>
+          {empresa.id && <FaTrashAlt title={`Deletar empresa ${empresa.name}`} className=" cursor-pointer text-red-500 hover:scale-110" size={30} onClick={() => deleteEmpresa(empresa?.id || 0)} />}
+
+        </span>
         <div className="flex w-full gap-2 justify-around items-center">
           <span>
             <FaServer

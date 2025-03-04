@@ -15,7 +15,7 @@ export default function Dashboard() {
   const ftpServerAtivo = ftpServers.filter(({ active }) => active);
 
   return (
-    <main className="ml-64 p-8">
+    <main className="mt-8">
       <h1 className="text-2xl font-bold mb-8">Dashboard</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <Link href="/page/olts">
@@ -27,9 +27,8 @@ export default function Dashboard() {
           />
         </Link>
         <StatusCard
-          title={`FTP SERVERS || Servidor Ativo ${
-            ftpServerAtivo[0]?.host ? ftpServerAtivo[0]?.host : "0"
-          }`}
+          title={`FTP SERVERS || Servidor Ativo ${ftpServerAtivo[0]?.host ? ftpServerAtivo[0]?.host : "0"
+            }`}
           value={ftpServers?.length}
           icon={<ClockIcon className="h-8 w-8" />}
           color="bg-green-500"

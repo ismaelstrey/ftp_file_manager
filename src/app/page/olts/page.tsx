@@ -2,20 +2,21 @@
 import { Olt } from "@/app/types/OltTypes";
 import OltList from "@/components/dashboard/OltList";
 import OltMenu from "@/components/olts/menu";
-import { useOltContext } from "@/context/OltContext";
-import useFetch from "@/hooks/useFetch";
+import useFtpServer from "@/hooks/useFtpServer";
+import useOlt from "@/hooks/useOlt";
 
 export default function PageOLT() {
-  const { ftpServers, toggleOlt } = useOltContext();
-  const { olts } = useFetch()
+  const { ftpServers, tooggleOlt } = useFtpServer();
+  const { olts } = useOlt()
   const filtra = ftpServers?.filter((list) => list.active === true);
+
   return (
     <main className=" p-8 flex w-full flex-col">
       <h1 className="text-2xl font-bold mb-8">
         OLTs / {filtra && filtra[0]?.name} / {filtra && filtra[0]?.host}
       </h1>
-      <OltMenu ftpServers={ftpServers} togleOlt={toggleOlt} />
-      <div className=" flex flex-col bg-white rounded-xl shadow-xs p-6 gap-4">
+      <OltMenu ftpServers={ftpServers} togleOlt={tooggleOlt} />
+      <div className=" flex flex-col bg-zinc-800 rounded-xl shadow-xs p-6 gap-4">
         <div className='flex justify-between'>
           <h2 className="text-xl font-semibold mb-4">Olts monitoradas </h2>
           <span>Total: {olts?.length}</span>

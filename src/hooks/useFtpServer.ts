@@ -1,24 +1,18 @@
 'use client';
+import { FtpServerAllType } from "@/app/types/FtpServersTypes";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 
-type FtpServerType = {
-    id: number;
-    host: string;
-    port: number;
-    username: string;
-    password: string;
-    active: boolean;
-    createdAt: string; // Pode ser Date se for convertido antes de usar
-};
 
-const fetchFtpServers = async (): Promise<FtpServerType[]> => {
+
+const fetchFtpServers = async (): Promise<FtpServerAllType[]> => {
     const response = await axios.get("/api/ftp_server");
-    return response.data;
+    const { data } = response;
+    return data;
 };
 
-const updateFtpServer = async (value: { id: number, active: boolean }): Promise<FtpServerType> => {
+const updateFtpServer = async (value: { id: number, active: boolean }): Promise<FtpServerAllType> => {
     const response = await axios.patch("/api/ftp_server", { id: value.id, active: value.active });
     return response.data;
 };
@@ -31,7 +25,7 @@ const useFtpServer = () => {
         queryFn: fetchFtpServers
     });
 
-    const { mutate: toggleOlt } = useMutation<FtpServerType, Error, { id: number; active: boolean }>(
+    const { mutate: toggleOlt } = useMutation<FtpServerAllType, Error, { id: number; active: boolean }>(
 
         {
             mutationFn: updateFtpServer,
@@ -45,6 +39,9 @@ const useFtpServer = () => {
             },
         }
     );
-    return { ftpServers, isLoading, error, toggleOlt };
+
+    const tooggleOlt = async (id: number, active: boolean) => await toggleOlt({ id, active });
+
+    return { ftpServers, isLoading, error, tooggleOlt };
 };
 export default useFtpServer;

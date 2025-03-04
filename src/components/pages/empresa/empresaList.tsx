@@ -18,8 +18,8 @@ export default function EmpresaList() {
   });
 
   return (
-    <div>
-      <h1>EmpresaList</h1>
+    <div className="mt-8 bg-zinc-800 p-4 rounded-lg h-full">
+
       <div className="flex flex-wrap gap-4 justify-around">
         {empresas?.map((empresa, index) => (
           <EmpresaItem empresa={empresa} key={index} />
