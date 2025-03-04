@@ -7,7 +7,7 @@ export async function GET() {
     const directories = await prisma.ftpEmpresa.findMany({
 
       select: {
-        server: true,
+        ftp_server: true
       }
     });
     return NextResponse.json(directories);

@@ -3,11 +3,10 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaToggleOff } from 'react-icons/fa';
 import { FtpConnectionConfig } from '@/app/types/FtpServersTypes';
-
 import { LuEye, LuEyeClosed } from 'react-icons/lu';
 import { FtpEmpresaAllType } from '@/app/types/FtpEmpresaType';
 import { useQuery } from '@tanstack/react-query';
-import { on } from 'events';
+
 
 
 export default function FtpServerForm({ handleFormSubmit }: { handleFormSubmit: ({ ftp }: { ftp: FtpConnectionConfig }) => void }) {
