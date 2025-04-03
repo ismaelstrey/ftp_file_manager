@@ -4,6 +4,7 @@ import { FaServer, FaToggleOff, FaTrashAlt } from "react-icons/fa";
 import { motion } from "motion/react";
 import ServerFtpItem from "../FtpServer/_ftpItem";
 import useEmpresa from "@/hooks/useEmpresa";
+import { MdOutlineDoubleArrow } from "react-icons/md";
 
 export default function EmpresaItem({
   empresa,
@@ -11,7 +12,7 @@ export default function EmpresaItem({
   empresa: FtpEmpresaAllType;
 }) {
   const [showServer, setShowServer] = useState<boolean>(false);
-  const { deleteEmpresa } = useEmpresa()
+  const { deleteEmpresa, tooggleEmpresa } = useEmpresa()
   const toggleServer = (): void => {
     setShowServer(!showServer);
   };
@@ -19,7 +20,7 @@ export default function EmpresaItem({
     <div className=" min-w-80">
 
       <div
-        onClick={() => toggleServer()}
+
         className="flex flex-col z-10 relative bg-black  border border-gray-400/50 p-4 rounded-full "
       >
         <span className="flex justify-between p-4">
@@ -37,9 +38,9 @@ export default function EmpresaItem({
           <p>
             {" "}
             {empresa.active ? (
-              <FaToggleOff size={30} className="fill-green-500" />
+              <FaToggleOff onClick={() => tooggleEmpresa(empresa?.id || 0, false)} size={30} className="fill-green-500 cursor-pointer" />
             ) : (
-              <FaToggleOff size={30} className="fill-red-500" />
+              <FaToggleOff onClick={() => tooggleEmpresa(empresa?.id || 0, true)} size={30} className="fill-red-500  cursor-pointer" />
             )}
           </p>
           <p> {empresa.active ? "Ativo" : "Inativo"}</p>
@@ -50,6 +51,9 @@ export default function EmpresaItem({
             {empresa.ftp_server?.length}
           </span>
         </div>
+        {empresa.ftp_server?.length > 0 && <span className="flex cursor-pointer justify-center -mb-6">
+          <MdOutlineDoubleArrow onClick={() => toggleServer()} title={showServer ? "Ocultar servidores" : "Mostrar servidores"} size={40} className={`text-3xl animate-pulse hover:scale-110 ${showServer ? " -rotate-90 text-amber-600" : "rotate-90"}`} />
+        </span>}
       </div>
       {empresa?.ftp_server && empresa?.ftp_server.length > 0 && (
         <div className="">

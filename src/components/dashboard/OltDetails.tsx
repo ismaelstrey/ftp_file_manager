@@ -8,16 +8,16 @@ import OltDetail from './_oltDetail';
 export default function OltDetails({ oltData }: { oltData?: BackupListAll }) {
     const router = useRouter();
     return (
-        <div className="bg-white rounded-xl shadow-xs p-6">
+        <div className="bg-zinc-800 rounded-xl shadow-xs p-6">
             <div className='flex justify-between'>
-                <h2 className="text-xl font-semibold mb-4">Olts monitoradas </h2>
-                <ArrowUturnLeftIcon title='Voltar' onClick={() => router.back()} className="h-5 w-5 text-blue-500 mr-8 cursor-pointer hover:scale-125" />
+                <span></span>
+                <ArrowUturnLeftIcon title='Voltar' onClick={() => router.back()} className="h-10 w-10 text-blue-500 mr-8 cursor-pointer hover:scale-125" />
             </div>
             <div className="space-y-3">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                    className="flex items-center justify-between p-4 rounded-lg"
                 >                    <div className="flex flex-col w-full items-center gap-3">
                         <div className='flex w-full justify-between gap-3'>
                             <div className="flex items-center gap-3">
@@ -34,6 +34,7 @@ export default function OltDetails({ oltData }: { oltData?: BackupListAll }) {
                         <div className='flex w-full justify-between gap-3'>
                             <OltDetail data={oltData?.data} type='data' />
                             <OltDetail data={oltData?.config} />
+                     
                         </div>
                     </div>
                 </motion.div>

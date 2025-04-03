@@ -36,6 +36,19 @@ const useEmpresa = () => {
             setIsSuccess(true)
         },
     });
+    const toogleEmpresa = useMutation({
+        mutationKey: ['ftpEmpresa'],
+        mutationFn: ({ id, active }: { id: number, active: boolean }) => {
+            return axios.put('/api/ftp_empresa', { id, active });
+        },
+        onSuccess: () => {
+            toast.success('Servifdor atualizado com sucesso!');
+            queryClient.invalidateQueries({ queryKey: ['ftpEmpresa'] });
+            queryClient.refetchQueries();
+            setIsLoading(false)
+            setIsSuccess(true)
+        },
+    });
 
     const deletarEmpresa = useMutation({
         mutationKey: ['ftpEmpresa'],
@@ -61,8 +74,13 @@ const useEmpresa = () => {
 
 
     };
+    const tooggleEmpresa = async (id: number, active: boolean) => {
+        await toogleEmpresa.mutate({ id, active })
 
-    return { bkpOlt, addEmpresa, isLoading, isSuccess, showForm, setShowForm, deleteEmpresa };
+
+    };
+
+    return { bkpOlt, addEmpresa, isLoading, isSuccess, showForm, setShowForm, deleteEmpresa, tooggleEmpresa };
 };
 
 

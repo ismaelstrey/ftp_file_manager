@@ -18,7 +18,7 @@ export default function PageOLT({ params }: PageParams) {
     if (isPending) return `${olt} Loading...`
     if (error) return 'An error has occurred: ' + error.message
     return (
-        <main className="ml-64 p-8">
+        <main className="pt-8">
             <h1 className="text-2xl font-bold mb-8">OLTs {olt}</h1>
             {isPending || !bkpOlt ? 'Carregando...' :
                 <OltDetails oltData={bkpOlt} />}

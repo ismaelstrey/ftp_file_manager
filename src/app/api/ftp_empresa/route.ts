@@ -66,14 +66,16 @@ export async function DELETE(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  const data: FtpEmpresa = await request.json();
+  const { id, ...data }: FtpEmpresa = await request.json();
   try {
     const directory = await prisma.ftpEmpresa.update({
       where: {
-        id: data.id,
+        id: id,
       },
       data,
     });
+
+    console.log(directory);
     return NextResponse.json(directory);
   } catch (error) {
     console.log(error);

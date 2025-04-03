@@ -36,7 +36,7 @@ export default function AddTaskForm({ onClose }: AddTaskFormProps) {
             animate={{ opacity: 1 }}
             className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
         >
-            <div className="bg-white rounded-lg p-6 w-full max-w-md">
+            <div className="border border-white/50 rounded-lg p-6 w-full max-w-md">
                 <h2 className="text-xl font-semibold mb-4">Nova Tarefa</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
@@ -91,13 +91,13 @@ export default function AddTaskForm({ onClose }: AddTaskFormProps) {
                         <button
                             type="button"
                             onClick={onClose}
-                            className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                            className="px-4 bg-red-500 rounded-lg py-2 text-white hover:scale-110 cursor-pointer"
                         >
                             Cancelar
                         </button>
                         <button
                             type="submit"
-                            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                            className="px-4 py-2 bg-blue-500 text-white rounded-lg  hover:scale-110 cursor-pointer"
                         >
                             Criar Tarefa
                         </button>
