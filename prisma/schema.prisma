@@ -47,3 +47,13 @@ model FtpEmpresa {
     createdAt  DateTime?   @default(now())
     ftp_server FtpServer[]
 }
+
+model Comando {
+    id        Int      @id @default(autoincrement())
+    name      String
+    command   String
+    type      String
+    olt       String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
