@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { SlArrowRight } from 'react-icons/sl';
+import { GrCli } from "react-icons/gr";
 
 const menuItems = [
     { name: 'Dashboard', icon: HomeIcon, href: '/' },
@@ -13,6 +14,7 @@ const menuItems = [
     { name: 'Checklist', icon: CheckIcon, href: '/page/checklist' },
     { name: 'Empresas', icon: BuildingStorefrontIcon, href: '/page/empresas' },
     { name: 'FTPs Server', icon: ServerIcon, href: '/page/ftpServer' },
+    { name: 'Comandos', icon: GrCli, href: '/page/comandos' },
     { name: 'Configurações', icon: CogIcon, href: '/page/configuracoes' },
 ];
 
