@@ -49,7 +49,7 @@ export default function ComandosList() {
 
     if (isLoading) {
         return (
-            <section className="min-h-screen flex items-center justify-center bg-black">
+            <section className="min-h-screen flex items-center justify-center   ,">
                 <motion.div
                     animate={{ rotate: 360 }}
                     transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
